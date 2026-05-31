@@ -2,47 +2,33 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>G-HEats - Dashboard</title>
     <style>
         body { font-family: sans-serif; background-color: #f4fcf4; padding: 20px; max-width: 400px; margin: auto; }
         .container { background: white; padding: 20px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .btn { background: #2d5a27; color: white; padding: 12px; border: none; border-radius: 10px; width: 100%; cursor: pointer; font-size: 16px; margin-top: 10px; }
-        nav { margin-top: 20px; padding: 10px; border-top: 1px solid #ddd; text-align: center; }
+        .btn { background: #2d5a27; color: white; padding: 12px; border: none; border-radius: 10px; width: 100%; cursor: pointer; margin-top: 10px; }
+        nav { margin-top: 20px; padding-top: 10px; border-top: 1px solid #ddd; text-align: center; }
         nav a { margin: 0 10px; text-decoration: none; color: #2d5a27; font-weight: bold; }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Ganti bagian header di index.html menjadi ini: -->
-<h3 id="displayNama">Halo!</h3>
-
-<script>
-    // Mengambil nama dari penyimpanan browser
-    let nama = localStorage.getItem("username");
-    if(nama) {
-        document.getElementById("displayNama").innerText = "Halo, " + nama + "!";
-    } else {
-        // Jika belum login, paksa ke halaman login
-        window.location.href = "login.html";
-    }
-</script>
+        <h3 id="displayNama">Halo!</h3>
         <div style="border: 2px solid #e0e0e0; padding: 20px; text-align: center; border-radius: 15px;">
             <h2>70%</h2>
             <p>Target Harian: 1800 kcal</p>
         </div>
-        <h4>Sajian Hari Ini</h4>
-        <div style="display: flex; gap: 10px;">
-            <div style="background: #f9f9f9; padding: 10px; border-radius: 10px; width: 50%;">Salmon<br><b>410 kcal</b></div>
-            <div style="background: #f9f9f9; padding: 10px; border-radius: 10px; width: 50%;">Smoothie<br><b>250 kcal</b></div>
-        </div>
         <a href="pemesanan.html"><button class="btn">Lihat Semua Menu</button></a>
-        
         <nav>
             <a href="index.html">Home</a>
             <a href="pemesanan.html">Menu</a>
             <a href="reward.html">Reward</a>
         </nav>
     </div>
+    <script>
+        let nama = localStorage.getItem("username");
+        if (!nama) { window.location.href = "login.html"; }
+        else { document.getElementById("displayNama").innerText = "Halo, " + nama + "!"; }
+    </script>
 </body>
 </html>
