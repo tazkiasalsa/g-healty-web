@@ -1,66 +1,67 @@
 import streamlit as st
 
 # --- KONFIGURASI HALAMAN ---
-st.set_page_config(page_title="G-HEats App", page_icon="🥗", layout="centered")
+st.set_page_config(page_title="G-HEats", page_icon="🥗", layout="centered")
 
-# --- CUSTOM CSS UNTUK TAMPILAN MODERN ---
+# --- CUSTOM CSS (Mirip UI App Mobile) ---
 st.markdown("""
 <style>
-    .stApp { background-color: #F8FAF9; }
-    .header-box { padding: 10px; border-bottom: 2px solid #E8F5E9; margin-bottom: 20px; }
-    .menu-card { background: white; padding: 15px; border-radius: 15px; border: 1px solid #E0E0E0; margin-bottom: 10px; }
-    .stButton>button { width: 100%; border-radius: 20px; background-color: #2E7D32; color: white; }
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap');
+    html, body, [class*="css"] { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAF9; }
+    .stApp { max-width: 450px; margin: 0 auto; }
+    .header { font-weight: 700; color: #1B5E20; font-size: 1.5rem; margin-bottom: 5px; }
+    .card { background: white; border-radius: 16px; padding: 16px; border: 1px solid #E8F5E9; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 15px; }
+    .btn-green { background-color: #2E7D32 !important; color: white !important; border-radius: 20px !important; }
 </style>
 """, unsafe_allow_html=True)
 
-# --- DATA MENU ---
-MENU_DATA = [
-    {"nama": "Geprek Oat", "kal": "450 kcal", "img": "🍗"},
-    {"nama": "Bakso Nila", "kal": "380 kcal", "img": "🍲"},
-    {"nama": "Nasi Goreng", "kal": "400 kcal", "img": "🍛"}
-]
+# --- FUNGSI HEADER ---
+def render_header(nama):
+    st.markdown(f"<div class='header'>Halo, {nama}! 👋</div>", unsafe_allow_html=True)
+    st.write("Target Harian: 1800 kcal")
+    st.progress(70) # 70% progress
 
-# --- FUNGSI TAMPILAN ---
-def render_header():
-    st.markdown("<div class='header-box'><h3>Halo, Fitri! 👋</h3><p>Target Harian: 1800 kcal</p></div>", unsafe_allow_html=True)
-    st.progress(0.7)
-
+# --- MAIN APP ---
 def main():
-    render_header()
+    render_header("Fitri")
     
-    # Navigasi Tab
     tab1, tab2, tab3, tab4 = st.tabs(["🏠 Home", "🍲 Menu", "🍱 Katering", "🎁 Reward"])
 
+    # TAB HOME
     with tab1:
         st.subheader("Sajian Hari Ini")
-        st.image("https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500")
-        st.write("Tetap semangat menjaga pola makan sehat!")
+        c1, c2 = st.columns(2)
+        with c1:
+            st.image("https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400", use_column_width=True)
+            st.write("**Salmon Panggang** (410 kcal)")
+        with c2:
+            st.image("https://images.unsplash.com/photo-1628557044797-f21a177c37ec?w=400", use_column_width=True)
+            st.write("**Smoothie Bowl** (250 kcal)")
 
+    # TAB MENU
     with tab2:
-        st.subheader("Pemesanan Menu")
-        for i, item in enumerate(MENU_DATA):
+        st.subheader("Pemesanan & Langganan")
+        menus = [("Geprek Oat", "450 kcal"), ("Bakso Ikan Nila", "380 kcal"), ("Nasi Goreng Merah", "400 kcal")]
+        for i, (nama, kal) in enumerate(menus):
             with st.container():
-                st.markdown(f"""
-                <div class='menu-card'>
-                    <div style='font-size:30px;'>{item['img']}</div>
-                    <b>{item['nama']}</b><br>{item['kal']}
-                </div>
-                """, unsafe_allow_html=True)
-                # Key unik untuk setiap tombol agar tidak error
-                if st.button(f"Pesan {item['nama']}", key=f"btn_menu_{i}"):
-                    st.success(f"Berhasil memesan {item['nama']}!")
+                st.markdown(f"<div class='card'><b>{nama}</b><br>{kal}</div>", unsafe_allow_html=True)
+                if st.button(f"Pesan {nama}", key=f"menu_{i}"):
+                    st.success(f"Berhasil menambahkan {nama}!")
 
+    # TAB KATERING
     with tab3:
         st.subheader("Katering Sehat")
-        st.write("Pilih paket langganan mingguan atau bulanan.")
-        if st.button("Pilih Paket 7 Hari", key="btn_katering"):
+        st.image("https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800", use_column_width=True)
+        if st.button("Berlangganan Paket Hemat", key="kat_1"):
             st.balloons()
+            st.success("Paket berhasil dipilih!")
 
+    # TAB REWARD
     with tab4:
-        st.subheader("Reward")
-        st.metric("Poin Anda", "2150 Poin")
-        if st.button("Tukar Voucher", key="btn_reward"):
-            st.warning("Voucher diklaim!")
+        st.subheader("Komunitas & Reward")
+        st.metric("G-HEats Point", "2150 Poin")
+        if st.button("Tukar Voucher", key="rew_1"):
+            st.warning("Voucher berhasil diklaim!")
 
 if __name__ == "__main__":
     main()
