@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - G-HEats</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f4fcf4; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-box { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
+        input { padding: 10px; width: 80%; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        button { padding: 10px 20px; background: #2d5a27; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h2>Selamat Datang di G-HEats</h2>
+        <input type="text" id="namaInput" placeholder="Masukkan nama Anda">
+        <br>
+        <button onclick="saveName()">Masuk</button>
+    </div>
+
+    <script>
+        function saveName() {
+            let nama = document.getElementById("namaInput").value;
+            if (nama) {
+                localStorage.setItem("username", nama);
+                window.location.href = "index.html";
+            } else {
+                alert("Masukkan nama terlebih dahulu!");
+            }
+        }
+    </script>
+</body>
+</html>
