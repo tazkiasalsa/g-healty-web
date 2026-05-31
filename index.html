@@ -20,11 +20,13 @@
     <div class="container">
         <h2 style="color: #2d5a27;">🌿 G-HEats</h2>
         <h3 id="displayNama">Halo!</h3>
+        
         <div class="calorie-box">
-            <p style="margin:0; color: #2d5a27;">Target Harian Anda:</p>
-            <h1 id="targetKalori" style="margin: 10px 0;">0 <span class="leaf-icon">🍃</span></h1>
-            <p style="margin:0; font-size: 14px;">Kcal / hari</p>
+            <p style="margin:0; color: #2d5a27;">Kalori Terpenuhi:</p>
+            <h1 id="kaloriTerpenuhi" style="margin: 10px 0;">0 <span class="leaf-icon">🍃</span></h1>
+            <p style="margin:0; font-size: 14px;">dari <span id="targetKalori">0</span> Kcal target harian</p>
         </div>
+        
         <a href="pemesanan.html"><button class="btn">Lihat Semua Menu</button></a>
         <nav>
             <a href="index.html">🏠 Home</a>
@@ -37,20 +39,29 @@
         let data = JSON.parse(localStorage.getItem("userData"));
         if (!data) { window.location.href = "login.html"; }
         
+        // Perhitungan Target Kalori
         let bmr = (data.gender === 'pria') ? (10 * data.bb) + (6.25 * data.tb) - (5 * data.usia) + 5 : (10 * data.bb) + (6.25 * data.tb) - (5 * data.usia) - 161;
         let tdee = bmr * parseFloat(data.aktivitas);
         let target = Math.round(tdee + parseInt(data.tujuan));
         
         document.getElementById("displayNama").innerText = "Halo, " + data.nama + "!";
-        document.getElementById("targetKalori").innerHTML = target + ' <span class="leaf-icon">🍃</span>';
+        document.getElementById("targetKalori").innerText = target;
 
-        function updateWidget() {
+        // Fungsi Update Widget Keranjang & Kalori
+        function updateDashboard() {
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            let total = cart.reduce((sum, item) => sum + item.harga, 0);
+            let totalHarga = cart.reduce((sum, item) => sum + item.harga, 0);
+            let totalKalori = cart.reduce((sum, item) => sum + item.kalori, 0);
+            
+            // Update Ikon Keranjang
             document.getElementById('cartCount').innerText = cart.length;
-            document.getElementById('cartTotal').innerText = "Rp " + total.toLocaleString();
+            document.getElementById('cartTotal').innerText = "Rp " + totalHarga.toLocaleString();
+            
+            // Update Kalori Terpenuhi
+            document.getElementById('kaloriTerpenuhi').innerHTML = totalKalori + ' <span class="leaf-icon">🍃</span>';
         }
-        updateWidget();
+        
+        updateDashboard();
     </script>
 </body>
 </html>
