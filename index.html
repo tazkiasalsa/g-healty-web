@@ -1,10 +1,20 @@
-<!-- Tambahkan di index.html, di bawah kotak target kalori -->
-<div class="calorie-box">
-    <p>Kalori Terkonsumsi: <span id="kaloriTerpakai">0</span> Kcal</p>
-</div>
-
-<script>
-    // Ambil data kalori dari keranjang yang sudah di-checkout
-    let kaloriMasuk = localStorage.getItem('totalKaloriHarian') || 0;
-    document.getElementById('kaloriTerpakai').innerText = kaloriMasuk;
-</script>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>G-HEats - Dashboard</title>
+</head>
+<body>
+    <div id="app">Memuat aplikasi...</div>
+    <script>
+        // Memeriksa apakah user sudah login
+        let user = localStorage.getItem("userData");
+        if (!user) {
+            window.location.href = "login.html";
+        } else {
+            // Arahkan ke konten utama jika sudah ada data
+            window.location.href = "dashboard.html"; // Pastikan file ini ada atau sesuaikan
+        }
+    </script>
+</body>
+</html>
