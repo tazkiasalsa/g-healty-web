@@ -10,22 +10,22 @@
         .btn { background: #2d5a27; color: white; padding: 12px; border: none; border-radius: 10px; width: 100%; cursor: pointer; font-size: 16px; margin-bottom: 20px; }
         nav { padding-top: 10px; border-top: 1px solid #eee; display: flex; justify-content: space-around; }
         nav a { text-decoration: none; color: #2d5a27; font-weight: bold; }
+        .cart-widget { position: fixed; top: 20px; right: 20px; background: #2d5a27; color: white; padding: 10px 15px; border-radius: 20px; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); text-decoration: none; z-index: 1000; font-size: 14px; }
         .leaf-icon { color: #2d5a27; font-size: 1.2em; }
     </style>
 </head>
 <body>
+    <a href="keranjang.html" class="cart-widget"><span>🛒</span><span id="cartCount">0</span> | <span id="cartTotal">Rp 0</span></a>
+
     <div class="container">
         <h2 style="color: #2d5a27;">🌿 G-HEats</h2>
         <h3 id="displayNama">Halo!</h3>
-        
         <div class="calorie-box">
             <p style="margin:0; color: #2d5a27;">Target Harian Anda:</p>
             <h1 id="targetKalori" style="margin: 10px 0;">0 <span class="leaf-icon">🍃</span></h1>
             <p style="margin:0; font-size: 14px;">Kcal / hari</p>
         </div>
-        
         <a href="pemesanan.html"><button class="btn">Lihat Semua Menu</button></a>
-        
         <nav>
             <a href="index.html">🏠 Home</a>
             <a href="pemesanan.html">🍽️ Menu</a>
@@ -37,16 +37,20 @@
         let data = JSON.parse(localStorage.getItem("userData"));
         if (!data) { window.location.href = "login.html"; }
         
-        // Rumus Mifflin-St Jeor
-        let bmr = (data.gender === 'pria') 
-            ? (10 * data.bb) + (6.25 * data.tb) - (5 * data.usia) + 5 
-            : (10 * data.bb) + (6.25 * data.tb) - (5 * data.usia) - 161;
-
+        let bmr = (data.gender === 'pria') ? (10 * data.bb) + (6.25 * data.tb) - (5 * data.usia) + 5 : (10 * data.bb) + (6.25 * data.tb) - (5 * data.usia) - 161;
         let tdee = bmr * parseFloat(data.aktivitas);
         let target = Math.round(tdee + parseInt(data.tujuan));
         
         document.getElementById("displayNama").innerText = "Halo, " + data.nama + "!";
         document.getElementById("targetKalori").innerHTML = target + ' <span class="leaf-icon">🍃</span>';
+
+        function updateWidget() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let total = cart.reduce((sum, item) => sum + item.harga, 0);
+            document.getElementById('cartCount').innerText = cart.length;
+            document.getElementById('cartTotal').innerText = "Rp " + total.toLocaleString();
+        }
+        updateWidget();
     </script>
 </body>
 </html>
