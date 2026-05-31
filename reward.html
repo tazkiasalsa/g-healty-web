@@ -14,11 +14,31 @@
     <h2>Komunitas & Reward</h2>
     <div class="balance-box">
         <p>G-HEats Point Balance</p>
-        <h1>2150 Poin</h1>
+        <h1 id="pointCount">2150 Poin</h1>
     </div>
+
     <h3>Poin Reward-mu Bisa Ditukar!</h3>
-    <div class="reward-card"><div><b>Voucher Supermarket Sehat</b><br><small>1000 Poin</small></div><button onclick="alert('Berhasil!')">Tukar</button></div>
-    <div class="reward-card"><div><b>Paket Produk Garut Organik</b><br><small>2000 Poin</small></div><button onclick="alert('Berhasil!')">Tukar</button></div>
+    <div class="reward-card">
+        <div><b>Voucher Supermarket Sehat</b><br><small>1000 Poin</small></div>
+        <button onclick="alert('Voucher berhasil ditukar! Cek email Anda.')">Tukar</button>
+    </div>
+    
+    <div class="reward-card">
+        <div><b>Paket Produk Garut Organik</b><br><small>2000 Poin</small></div>
+        <button onclick="pilihPaket()">Tukar</button>
+    </div>
+
     <nav style="text-align: center; margin-top: 20px;"><a href="index.html">← Kembali ke Home</a></nav>
+
+    <script>
+        function pilihPaket() {
+            let pilihan = prompt("Pilih isi Paket Garut Organik Anda:\n1. Sayuran Organik Segar\n2. Olahan Ikan Nila\n3. Beras Merah/Hitam\n4. Produk Turunan OAT\n5. Herbal Lokal\n\nKetik nomor pilihan Anda:");
+            
+            if (pilihan) {
+                alert("Pilihan paket #" + pilihan + " berhasil ditukar! Tim kami akan segera menyiapkan pesanan Anda.");
+                // Logika untuk mengurangi poin bisa ditambahkan di sini
+            }
+        }
+    </script>
 </body>
 </html>
