@@ -3,62 +3,64 @@ import streamlit as st
 # --- KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="G-HEats App", page_icon="🥗", layout="centered")
 
-# --- CSS UNTUK TAMPILAN MODERN ---
+# --- CUSTOM CSS UNTUK TAMPILAN MODERN ---
 st.markdown("""
 <style>
-    [data-testid="stAppViewContainer"] { background-color: #F8FAF9; }
-    .stButton>button { width: 100%; border-radius: 20px; background-color: #2E7D32; color: white; border: none; }
-    .card { background: white; padding: 15px; border-radius: 15px; border: 1px solid #E0E0E0; margin-bottom: 15px; }
-    .header-text { font-size: 20px; font-weight: bold; color: #1B5E20; margin-bottom: 10px; }
+    .stApp { background-color: #F8FAF9; }
+    .header-box { padding: 10px; border-bottom: 2px solid #E8F5E9; margin-bottom: 20px; }
+    .menu-card { background: white; padding: 15px; border-radius: 15px; border: 1px solid #E0E0E0; margin-bottom: 10px; }
+    .stButton>button { width: 100%; border-radius: 20px; background-color: #2E7D32; color: white; }
 </style>
 """, unsafe_allow_html=True)
 
+# --- DATA MENU ---
+MENU_DATA = [
+    {"nama": "Geprek Oat", "kal": "450 kcal", "img": "🍗"},
+    {"nama": "Bakso Nila", "kal": "380 kcal", "img": "🍲"},
+    {"nama": "Nasi Goreng", "kal": "400 kcal", "img": "🍛"}
+]
+
 # --- FUNGSI TAMPILAN ---
+def render_header():
+    st.markdown("<div class='header-box'><h3>Halo, Fitri! 👋</h3><p>Target Harian: 1800 kcal</p></div>", unsafe_allow_html=True)
+    st.progress(0.7)
+
 def main():
-    st.markdown("<div class='header-text'>Halo, Fitri! 👋</div>", unsafe_allow_html=True)
+    render_header()
     
-    # Progress Bar Kalori
-    st.write("Target Harian: 1800 kcal")
-    st.progress(70) 
+    # Navigasi Tab
+    tab1, tab2, tab3, tab4 = st.tabs(["🏠 Home", "🍲 Menu", "🍱 Katering", "🎁 Reward"])
 
-    # Tab Navigasi
-    tabs = st.tabs(["🏠 Home", "🍲 Menu", "🍱 Katering", "🎁 Reward"])
-
-    with tabs[0]: # HOME
+    with tab1:
         st.subheader("Sajian Hari Ini")
-        col1, col2 = st.columns(2)
-        with col1:
-            st.image("https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400", use_column_width=True)
-            st.write("**Salmon Panggang**")
-        with col2:
-            st.image("https://images.unsplash.com/photo-1628557044797-f21a177c37ec?w=400", use_column_width=True)
-            st.write("**Smoothie Detox**")
+        st.image("https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500")
+        st.write("Tetap semangat menjaga pola makan sehat!")
 
-    with tabs[1]: # MENU
+    with tab2:
         st.subheader("Pemesanan Menu")
-        menu_items = [
-            ("Geprek Oat Rendah Natrium", "450 kcal"),
-            ("Bakso Ikan Nila", "380 kcal"),
-            ("Nasi Goreng Merah", "400 kcal")
-        ]
-        for nama, kal in menu_items:
+        for i, item in enumerate(MENU_DATA):
             with st.container():
-                st.markdown(f"<div class='card'><b>{nama}</b><br>{kal}</div>", unsafe_allow_html=True)
-                if st.button(f"Pesan {nama}", key=f"menu_{nama}"):
-                    st.success(f"Berhasil menambahkan {nama}!")
+                st.markdown(f"""
+                <div class='menu-card'>
+                    <div style='font-size:30px;'>{item['img']}</div>
+                    <b>{item['nama']}</b><br>{item['kal']}
+                </div>
+                """, unsafe_allow_html=True)
+                # Key unik untuk setiap tombol agar tidak error
+                if st.button(f"Pesan {item['nama']}", key=f"btn_menu_{i}"):
+                    st.success(f"Berhasil memesan {item['nama']}!")
 
-    with tabs[2]: # KATERING
+    with tab3:
         st.subheader("Katering Sehat")
-        st.image("https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800", use_column_width=True)
-        if st.button("Langganan Paket 7 Hari"):
+        st.write("Pilih paket langganan mingguan atau bulanan.")
+        if st.button("Pilih Paket 7 Hari", key="btn_katering"):
             st.balloons()
-            st.success("Paket mingguan berhasil dipilih!")
 
-    with tabs[3]: # REWARD
+    with tab4:
         st.subheader("Reward")
         st.metric("Poin Anda", "2150 Poin")
-        if st.button("Tukar Voucher"):
-            st.warning("Voucher berhasil diklaim!")
+        if st.button("Tukar Voucher", key="btn_reward"):
+            st.warning("Voucher diklaim!")
 
 if __name__ == "__main__":
     main()
