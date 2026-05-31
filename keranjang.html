@@ -1,27 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Keranjang G-HEats</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f4fcf4; padding: 20px; max-width: 500px; margin: auto; }
+        .card { background: white; padding: 15px; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .item { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .total-section { background: #2d5a27; color: white; padding: 15px; border-radius: 15px; text-align: center; margin: 20px 0; }
+        .payment-option { display: flex; align-items: center; gap: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 10px; cursor: pointer; }
+        .payment-option:hover { background: #e8f5e9; }
+        button { background: #d32f2f; color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; cursor: pointer; font-size: 16px; font-weight: bold; }
+    </style>
+</head>
 <body>
-    <h2>Keranjang Anda</h2>
-    <div id="listKeranjang"></div>
-    <h3>Total Harga: <span id="totalHarga">0</span></h3>
-    <button onclick="checkout()">Checkout</button>
+    <h2 style="text-align: center; color: #2d5a27;">🛒 Keranjang Anda</h2>
+    
+    <div class="card" id="cartItems">
+        <!-- Item akan muncul di sini -->
+    </div>
+
+    <div class="total-section">
+        <h3>Total Pembayaran</h3>
+        <h2 id="totalHarga">Rp 0</h2>
+    </div>
+
+    <h4>Pilih Metode Pembayaran:</h4>
+    <div class="card">
+        <label class="payment-option"><input type="radio" name="pay" value="DANA" checked> DANA</label>
+        <label class="payment-option"><input type="radio" name="pay" value="GoPay"> GoPay</label>
+        <label class="payment-option"><input type="radio" name="pay" value="ShopeePay"> ShopeePay</label>
+    </div>
+
+    <button onclick="prosesCheckout()">Bayar Sekarang</button>
+    <div style="text-align: center; margin-top: 20px;"><a href="pemesanan.html">← Kembali ke Menu</a></div>
 
     <script>
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        let list = document.getElementById('listKeranjang');
-        let totalH = 0;
-        let totalK = 0;
+        const container = document.getElementById('cartItems');
+        const totalDisplay = document.getElementById('totalHarga');
+        let total = 0;
 
-        cart.forEach(item => {
-            list.innerHTML += `<p>${item.nama} - Rp ${item.harga}</p>`;
-            totalH += item.harga;
-            totalK += item.kalori;
+        cart.forEach((item, index) => {
+            total += item.harga;
+            container.innerHTML += `
+                <div class="item">
+                    <span>${item.nama}</span>
+                    <span>Rp ${item.harga.toLocaleString()}</span>
+                </div>
+            `;
         });
-        document.getElementById('totalHarga').innerText = totalH;
+        totalDisplay.innerText = "Rp " + total.toLocaleString();
 
-        function checkout() {
-            localStorage.setItem('totalKaloriHarian', totalK);
-            alert("Pesanan berhasil! Total kalori tersimpan.");
+        function prosesCheckout() {
+            let metode = document.querySelector('input[name="pay"]:checked').value;
+            alert("Pesanan berhasil diproses dengan " + metode + "! Total: " + totalDisplay.innerText);
+            localStorage.removeItem('cart'); // Kosongkan keranjang
             window.location.href = "index.html";
         }
     </script>
