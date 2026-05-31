@@ -14,7 +14,19 @@
 </head>
 <body>
     <div class="container">
-        <h3>Halo, Fitri!</h3>
+        <!-- Ganti bagian header di index.html menjadi ini: -->
+<h3 id="displayNama">Halo!</h3>
+
+<script>
+    // Mengambil nama dari penyimpanan browser
+    let nama = localStorage.getItem("username");
+    if(nama) {
+        document.getElementById("displayNama").innerText = "Halo, " + nama + "!";
+    } else {
+        // Jika belum login, paksa ke halaman login
+        window.location.href = "login.html";
+    }
+</script>
         <div style="border: 2px solid #e0e0e0; padding: 20px; text-align: center; border-radius: 15px;">
             <h2>70%</h2>
             <p>Target Harian: 1800 kcal</p>
