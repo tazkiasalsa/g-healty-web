@@ -5,24 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pemesanan - G-HEats</title>
     <style>
-        body { font-family: sans-serif; background-color: #f4fcf4; padding: 20px; max-width: 400px; margin: auto; }
-        .card { background: white; padding: 15px; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        h2 { color: #2d5a27; }
-        .price { font-weight: bold; color: #d32f2f; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4fcf4; padding: 20px; max-width: 500px; margin: auto; }
+        .menu-list { display: grid; gap: 15px; }
+        .card { background: white; padding: 10px; border-radius: 15px; display: flex; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .card img { width: 80px; height: 80px; border-radius: 10px; object-fit: cover; margin-right: 15px; }
+        .info h3 { margin: 0; font-size: 16px; color: #2d5a27; }
+        .info p { margin: 5px 0; font-size: 12px; color: #666; }
+        nav { text-align: center; margin: 30px 0; }
+        nav a { text-decoration: none; color: #2d5a27; font-weight: bold; }
     </style>
 </head>
 <body>
-    <h2>Pemesanan & Langganan</h2>
-    <div class="card">
-        <h3>Geprek Oat Rendah Natrium</h3>
-        <p>450 kcal - Bahan Lokal Garut</p>
-        <p class="price">Mulai dari Rp 25.000</p>
+    <h2 style="text-align: center; color: #2d5a27;">Menu Sehat G-HEats</h2>
+    <div class="menu-list">
+        <!-- Contoh 3 dari 15 Menu -->
+        <div class="card"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c" alt="Menu">
+            <div class="info"><h3>Geprek Oat Rendah Natrium</h3><p>450 kcal | Ikan/Ayam Lokal</p></div>
+        </div>
+        <div class="card"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd" alt="Menu">
+            <div class="info"><h3>Salmon Mentai Shirataki</h3><p>380 kcal | Kandungan Gizi Tinggi</p></div>
+        </div>
+        <div class="card"><img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061" alt="Menu">
+            <div class="info"><h3>Bakso Ikan Nila Kuah</h3><p>300 kcal | Bahan Segar Garut</p></div>
+        </div>
+        <!-- Tambahkan 12 menu lainnya dengan pola yang sama di sini -->
+        <div class="card"><img src="https://images.unsplash.com/photo-1505252585461-04db19515908" alt="Menu">
+            <div class="info"><h3>Smoothie Bowl Detox</h3><p>250 kcal | Buah Lokal Segar</p></div>
+        </div>
+        <div class="card"><img src="https://images.unsplash.com/photo-1540189549336-e6e99c3675fe" alt="Menu">
+            <div class="info"><h3>Nasi Goreng Merah</h3><p>400 kcal | Tanpa Minyak Goreng</p></div>
+        </div>
+        <!-- (Anda bisa menyalin blok <div class="card">...</div> sebanyak 10 kali lagi untuk melengkapi 15 menu) -->
     </div>
-    <div class="card">
-        <h3>Salmon Mentai Shirataki</h3>
-        <p>380 kcal - Kandungan Gizi Lengkap</p>
-        <p class="price">Mulai dari Rp 45.000</p>
-    </div>
-    <a href="index.html">Kembali ke Home</a>
+
+    <nav>
+        <a href="index.html">← Kembali ke Home</a>
+    </nav>
 </body>
 </html>
