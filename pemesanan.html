@@ -6,16 +6,14 @@
     <style>
         body { font-family: sans-serif; background-color: #f4fcf4; padding: 20px; max-width: 500px; margin: auto; }
         .card { background: white; padding: 15px; border-radius: 15px; margin-bottom: 12px; display: flex; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .card img { width: 80px; height: 80px; border-radius: 10px; object-fit: cover; }
         .info { flex-grow: 1; margin-left: 15px; }
         .price { font-weight: bold; color: #d32f2f; }
-        button { background: #2d5a27; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin-top: 5px; }
+        button { background: #2d5a27; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
     <h2 style="text-align: center; color: #2d5a27;">Menu Utama G-HEats</h2>
     
-    <!-- Daftar Menu -->
     <div id="menuContainer"></div>
 
     <div style="text-align: center; margin-top: 20px;">
@@ -26,18 +24,18 @@
 
     <script>
         const daftarMenu = [
-            {nama: "Geprek Oat", kalori: 450, harga: 25000, img: "geprek.jpg"},
-            {nama: "Bakso Ikan Nila", kalori: 300, harga: 20000, img: "bakso.jpg"},
-            {nama: "Salad Sayur Organik", kalori: 150, harga: 15000, img: "salad.jpg"},
-            {nama: "Nasi Merah Ikan", kalori: 400, harga: 22000, img: "nasi.jpg"},
-            // Tambahkan sisa menu Anda di sini dengan format yang sama
+            {nama: "Ayam Geprek", kalori: 450, harga: 25000},
+            {nama: "Steak Tempe Bakar", kalori: 300, harga: 18000},
+            {nama: "Bakso Nila Kuah Bening", kalori: 250, harga: 20000},
+            {nama: "Edamame Rebus Garam Laut", kalori: 120, harga: 10000},
+            {nama: "Gado-gado Siram Kacang", kalori: 350, harga: 15000},
+            {nama: "Tahu Kukus Jamur", kalori: 180, harga: 12000}
         ];
 
         const container = document.getElementById('menuContainer');
         daftarMenu.forEach(item => {
             container.innerHTML += `
                 <div class="card">
-                    <img src="${item.img}" alt="${item.nama}">
                     <div class="info">
                         <h3>${item.nama}</h3>
                         <p>${item.kalori} kcal | <span class="price">Rp ${item.harga.toLocaleString()}</span></p>
@@ -51,7 +49,7 @@
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
             cart.push({nama, harga, kalori});
             localStorage.setItem('cart', JSON.stringify(cart));
-            alert(nama + " berhasil ditambahkan!");
+            alert(nama + " ditambahkan ke keranjang!");
         }
     </script>
 </body>
