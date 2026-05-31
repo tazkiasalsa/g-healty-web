@@ -3,39 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>G-HEats - Katering Sehat</title>
+    <title>G-HEats - Dashboard</title>
     <style>
-        body { font-family: sans-serif; background-color: #f4fcf4; margin: 0; padding: 20px; }
-        .container { max-width: 400px; margin: auto; background: white; padding: 20px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .header { display: flex; justify-content: space-between; align-items: center; }
-        .progress-box { text-align: center; margin: 20px 0; padding: 20px; border: 2px solid #e0e0e0; border-radius: 15px; }
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
-        .menu-item { background: #f9f9f9; padding: 10px; border-radius: 10px; font-size: 12px; }
-        .btn { background: #2d5a27; color: white; padding: 10px; border: none; border-radius: 5px; width: 100%; cursor: pointer; }
+        body { font-family: sans-serif; background-color: #f4fcf4; padding: 20px; max-width: 400px; margin: auto; }
+        .container { background: white; padding: 20px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .btn { background: #2d5a27; color: white; padding: 12px; border: none; border-radius: 10px; width: 100%; cursor: pointer; font-size: 16px; margin-top: 10px; }
+        nav { margin-top: 20px; padding: 10px; border-top: 1px solid #ddd; text-align: center; }
+        nav a { margin: 0 10px; text-decoration: none; color: #2d5a27; font-weight: bold; }
     </style>
 </head>
 <body>
-
-<div class="container">
-    <div class="header">
+    <div class="container">
         <h3>Halo, Fitri!</h3>
-        <span>🔔</span>
+        <div style="border: 2px solid #e0e0e0; padding: 20px; text-align: center; border-radius: 15px;">
+            <h2>70%</h2>
+            <p>Target Harian: 1800 kcal</p>
+        </div>
+        <h4>Sajian Hari Ini</h4>
+        <div style="display: flex; gap: 10px;">
+            <div style="background: #f9f9f9; padding: 10px; border-radius: 10px; width: 50%;">Salmon<br><b>410 kcal</b></div>
+            <div style="background: #f9f9f9; padding: 10px; border-radius: 10px; width: 50%;">Smoothie<br><b>250 kcal</b></div>
+        </div>
+        <a href="pemesanan.html"><button class="btn">Lihat Semua Menu</button></a>
+        
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="pemesanan.html">Menu</a>
+            <a href="reward.html">Reward</a>
+        </nav>
     </div>
-
-    <div class="progress-box">
-        <h2>70%</h2>
-        <p>Target Harian: 1800 kcal</p>
-    </div>
-
-    <h4>Sajian Hari Ini</h4>
-    <div class="menu-grid">
-        <div class="menu-item">Salmon Panggang<br><b>410 kcal</b></div>
-        <div class="menu-item">Smoothie Bowl<br><b>250 kcal</b></div>
-    </div>
-
-    <h4>Rekomendasi Menu</h4>
-    <button class="btn">Lihat Semua Menu</button>
-</div>
-
 </body>
 </html>
