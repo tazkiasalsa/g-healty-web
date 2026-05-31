@@ -17,16 +17,11 @@
         <br>
         <button onclick="saveName()">Masuk</button>
     </div>
-
     <script>
         function saveName() {
             let nama = document.getElementById("namaInput").value;
-            if (nama) {
-                localStorage.setItem("username", nama);
-                window.location.href = "index.html";
-            } else {
-                alert("Masukkan nama terlebih dahulu!");
-            }
+            if (nama) { localStorage.setItem("username", nama); window.location.href = "index.html"; }
+            else { alert("Masukkan nama terlebih dahulu!"); }
         }
     </script>
 </body>
