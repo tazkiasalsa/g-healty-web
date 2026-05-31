@@ -1,47 +1,10 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>G-HEats - Dashboard</title>
-    <style>
-        body { font-family: sans-serif; background-color: #f4fcf4; padding: 20px; max-width: 400px; margin: auto; }
-        .container { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
-        .calorie-box { background: #e8f5e9; padding: 20px; border-radius: 15px; margin: 20px 0; border: 1px solid #c8e6c9; }
-        .btn { background: #2d5a27; color: white; padding: 12px; border: none; border-radius: 10px; width: 100%; cursor: pointer; font-size: 16px; margin-bottom: 20px; }
-        nav { padding-top: 10px; border-top: 1px solid #eee; display: flex; justify-content: space-around; }
-        nav a { text-decoration: none; color: #2d5a27; font-weight: bold; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h2 id="displayNama">Halo!</h2>
-        <div class="calorie-box">
-            <p style="margin:0; color: #2d5a27;">Target Harian Anda:</p>
-            <h1 id="targetKalori" style="margin: 10px 0;">0</h1>
-            <p style="margin:0; font-size: 14px;">Kcal / hari</p>
-        </div>
-        <a href="pemesanan.html"><button class="btn">Lihat Semua Menu</button></a>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="pemesanan.html">Menu</a>
-            <a href="reward.html">Reward</a>
-        </nav>
-    </div>
+<!-- Tambahkan di index.html, di bawah kotak target kalori -->
+<div class="calorie-box">
+    <p>Kalori Terkonsumsi: <span id="kaloriTerpakai">0</span> Kcal</p>
+</div>
 
-    <script>
-        let data = JSON.parse(localStorage.getItem("userData"));
-        if (!data) { window.location.href = "login.html"; }
-        
-        // Rumus Mifflin-St Jeor
-        let bmr = (data.gender === 'pria') 
-            ? (10 * data.bb) + (6.25 * data.tb) - (5 * data.usia) + 5 
-            : (10 * data.bb) + (6.25 * data.tb) - (5 * data.usia) - 161;
-
-        let tdee = bmr * parseFloat(data.aktivitas);
-        let target = Math.round(tdee + parseInt(data.tujuan));
-        
-        document.getElementById("displayNama").innerText = "Halo, " + data.nama + "!";
-        document.getElementById("targetKalori").innerText = target;
-    </script>
-</body>
-</html>
+<script>
+    // Ambil data kalori dari keranjang yang sudah di-checkout
+    let kaloriMasuk = localStorage.getItem('totalKaloriHarian') || 0;
+    document.getElementById('kaloriTerpakai').innerText = kaloriMasuk;
+</script>
