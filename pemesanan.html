@@ -5,21 +5,54 @@
     <title>Menu G-HEats</title>
     <style>
         body { font-family: sans-serif; background-color: #f4fcf4; padding: 20px; max-width: 500px; margin: auto; }
-        .card { background: white; padding: 15px; border-radius: 15px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .card { background: white; padding: 15px; border-radius: 15px; margin-bottom: 12px; display: flex; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .card img { width: 80px; height: 80px; border-radius: 10px; object-fit: cover; }
+        .info { flex-grow: 1; margin-left: 15px; }
         .price { font-weight: bold; color: #d32f2f; }
-        nav { text-align: center; margin-top: 20px; }
+        button { background: #2d5a27; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin-top: 5px; }
     </style>
 </head>
 <body>
     <h2 style="text-align: center; color: #2d5a27;">Menu Utama G-HEats</h2>
     
-    <div class="card">
-        <div><h3>Geprek Oat</h3><p>450 kcal | <span class="price">Rp 25.000</span></p></div>
-    </div>
-    <div class="card">
-        <div><h3>Bakso Ikan Nila</h3><p>300 kcal | <span class="price">Rp 20.000</span></p></div>
+    <!-- Daftar Menu -->
+    <div id="menuContainer"></div>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="keranjang.html"><button style="background: #d32f2f; padding: 10px 20px;">Lihat Keranjang</button></a>
+        <br><br>
+        <a href="index.html">← Kembali ke Home</a>
     </div>
 
-    <nav><a href="index.html">← Kembali ke Home</a></nav>
+    <script>
+        const daftarMenu = [
+            {nama: "Geprek Oat", kalori: 450, harga: 25000, img: "geprek.jpg"},
+            {nama: "Bakso Ikan Nila", kalori: 300, harga: 20000, img: "bakso.jpg"},
+            {nama: "Salad Sayur Organik", kalori: 150, harga: 15000, img: "salad.jpg"},
+            {nama: "Nasi Merah Ikan", kalori: 400, harga: 22000, img: "nasi.jpg"},
+            // Tambahkan sisa menu Anda di sini dengan format yang sama
+        ];
+
+        const container = document.getElementById('menuContainer');
+        daftarMenu.forEach(item => {
+            container.innerHTML += `
+                <div class="card">
+                    <img src="${item.img}" alt="${item.nama}">
+                    <div class="info">
+                        <h3>${item.nama}</h3>
+                        <p>${item.kalori} kcal | <span class="price">Rp ${item.harga.toLocaleString()}</span></p>
+                        <button onclick="tambahKeKeranjang('${item.nama}', ${item.harga}, ${item.kalori})">Pesan</button>
+                    </div>
+                </div>
+            `;
+        });
+
+        function tambahKeKeranjang(nama, harga, kalori) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.push({nama, harga, kalori});
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert(nama + " berhasil ditambahkan!");
+        }
+    </script>
 </body>
 </html>
