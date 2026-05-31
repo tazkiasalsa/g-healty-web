@@ -71,6 +71,31 @@ with tab2:
     </div>
     """, unsafe_allow_html=True)
     
+    # Format list dipecah ke bawah agar aman dari error copy-paste
     menus = [
-        {"img": "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=200", "nama": "Geprek Oat Rendah Natrium", "kal": "450 kcal"},
-        {"img": "
+        {
+            "img": "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=200", 
+            "nama": "Geprek Oat Rendah Natrium", 
+            "kal": "450 kcal"
+        },
+        {
+            "img": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200", 
+            "nama": "Bakso Ikan Nila Kuah Bening", 
+            "kal": "380 kcal"
+        },
+        {
+            "img": "https://images.unsplash.com/photo-1603048297172-c92544798d5e?w=200", 
+            "nama": "Nasi Goreng Merah Organik", 
+            "kal": "400 kcal"
+        }
+    ]
+    
+    for menu in menus:
+        st.markdown(f"""
+        <div class="menu-row">
+            <img src="{menu['img']}" class="menu-img">
+            <div class="menu-info" style="flex:1;">
+                <h4>{menu['nama']}</h4>
+                <p>Mulai dari <strong style="color:#2E7D32;">{menu['kal']}</strong></p>
+                <div style="margin-top:5px;">
+                    <span class="tag-green">✅ Gizi
