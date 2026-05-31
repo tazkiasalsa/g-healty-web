@@ -6,8 +6,15 @@ st.set_page_config(page_title="G-HEats - Garut Healthy Eats", page_icon="🥗", 
 # --- CUSTOM CSS ---
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap');
+    /* 1. KODE UNTUK MENYEMBUNYIKAN LOGO GITHUB & BAWAAN STREAMLIT */
+    #MainMenu {visibility: hidden;}
+    header {visibility: hidden;}
+    footer {visibility: hidden;}
+    .stDeployButton {display:none;}
+    .viewerBadge_container__1QSob {display: none;}
     
+    /* 2. KODE DESAIN TAMPILAN G-HEATS (Sama seperti sebelumnya) */
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap');
     html, body, [class*="css"]  {
         font-family: 'Plus Jakarta Sans', sans-serif;
         background-color: #F4F7F5;
@@ -22,8 +29,6 @@ st.markdown("""
     .badge-price { color: #1976D2; font-weight: 700; font-size: 1.1rem; }
 </style>
 """, unsafe_allow_html=True)
-
-# --- INISIALISASI SESSION STATE ---
 # Session State digunakan agar data tidak hilang saat tombol ditekan (halaman direfresh)
 if 'cart' not in st.session_state:
     st.session_state.cart = []
