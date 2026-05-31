@@ -2,12 +2,12 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reward - G-HEats</title>
     <style>
         body { font-family: sans-serif; background-color: #f4fcf4; padding: 20px; max-width: 400px; margin: auto; }
-        .balance-box { background: #e8f5e9; padding: 20px; text-align: center; border-radius: 15px; }
-        .reward-card { background: white; padding: 15px; border-radius: 10px; margin-top: 10px; border: 1px solid #ddd; }
+        .balance-box { background: #e8f5e9; padding: 20px; text-align: center; border-radius: 15px; color: #2d5a27; }
+        .reward-card { background: white; padding: 15px; border-radius: 10px; margin-top: 10px; border: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; }
+        button { background: #2d5a27; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -16,15 +16,9 @@
         <p>G-HEats Point Balance</p>
         <h1>2150 Poin</h1>
     </div>
-    
     <h3>Poin Reward-mu Bisa Ditukar!</h3>
-    <div class="reward-card">
-        <p>Voucher Supermarket Sehat</p>
-    </div>
-    <div class="reward-card">
-        <p>Paket Produk Garut Organik</p>
-    </div>
-    <br>
-    <a href="index.html">Kembali ke Home</a>
+    <div class="reward-card"><div><b>Voucher Supermarket Sehat</b><br><small>1000 Poin</small></div><button onclick="alert('Berhasil!')">Tukar</button></div>
+    <div class="reward-card"><div><b>Paket Produk Garut Organik</b><br><small>2000 Poin</small></div><button onclick="alert('Berhasil!')">Tukar</button></div>
+    <nav style="text-align: center; margin-top: 20px;"><a href="index.html">← Kembali ke Home</a></nav>
 </body>
 </html>
