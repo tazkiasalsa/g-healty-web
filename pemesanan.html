@@ -6,47 +6,20 @@
     <style>
         body { font-family: sans-serif; background-color: #f4fcf4; padding: 20px; max-width: 500px; margin: auto; }
         .card { background: white; padding: 15px; border-radius: 15px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .info { flex-grow: 1; margin-left: 15px; }
         .price { font-weight: bold; color: #d32f2f; }
-        button { background: #2d5a27; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; }
+        nav { text-align: center; margin-top: 20px; }
     </style>
 </head>
 <body>
     <h2 style="text-align: center; color: #2d5a27;">Menu Utama G-HEats</h2>
     
-    <!-- Contoh Menu 1 -->
     <div class="card">
-        <div class="info">
-            <h3>Geprek Oat Rendah Natrium</h3>
-            <p>450 kcal | <span class="price">Rp 25.000</span></p>
-        </div>
-        <button onclick="tambahKeKeranjang('Geprek Oat', 25000, 450)">Pesan</button>
+        <div><h3>Geprek Oat</h3><p>450 kcal | <span class="price">Rp 25.000</span></p></div>
     </div>
-
-    <!-- Contoh Menu 2 -->
     <div class="card">
-        <div class="info">
-            <h3>Bakso Ikan Nila Kuah Bening</h3>
-            <p>300 kcal | <span class="price">Rp 20.000</span></p>
-        </div>
-        <button onclick="tambahKeKeranjang('Bakso Ikan Nila', 20000, 300)">Pesan</button>
+        <div><h3>Bakso Ikan Nila</h3><p>300 kcal | <span class="price">Rp 20.000</span></p></div>
     </div>
 
-    <!-- Tambahkan menu 3-10 dengan pola yang sama seperti di atas -->
-
-    <div style="text-align: center; margin-top: 20px;">
-        <a href="keranjang.html"><button style="background: #d32f2f;">Lihat Keranjang</button></a>
-        <br><br>
-        <a href="index.html">← Kembali ke Home</a>
-    </div>
-
-    <script>
-        function tambahKeKeranjang(nama, harga, kalori) {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            cart.push({nama, harga, kalori});
-            localStorage.setItem('cart', JSON.stringify(cart));
-            alert(nama + " ditambahkan ke keranjang!");
-        }
-    </script>
+    <nav><a href="index.html">← Kembali ke Home</a></nav>
 </body>
 </html>
