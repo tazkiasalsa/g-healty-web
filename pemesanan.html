@@ -10,18 +10,14 @@
         .info { flex-grow: 1; margin-left: 15px; }
         .price { font-weight: bold; color: #d32f2f; }
         button { background: #2d5a27; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; }
+        .cart-widget { position: fixed; top: 20px; right: 20px; background: #2d5a27; color: white; padding: 10px 15px; border-radius: 20px; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); text-decoration: none; z-index: 1000; font-size: 14px; }
     </style>
 </head>
 <body>
-    <h2 style="text-align: center; color: #2d5a27;">Menu Utama G-HEats</h2>
+    <a href="keranjang.html" class="cart-widget"><span>🛒</span><span id="cartCount">0</span> | <span id="cartTotal">Rp 0</span></a>
+    <h2 style="text-align: center; color: #2d5a27; margin-top: 60px;">Menu Utama G-HEats</h2>
     
     <div id="menuContainer"></div>
-
-    <div style="text-align: center; margin-top: 20px;">
-        <a href="keranjang.html"><button style="background: #d32f2f; padding: 10px 20px;">Lihat Keranjang</button></a>
-        <br><br>
-        <a href="index.html">← Kembali ke Home</a>
-    </div>
 
     <script>
         const daftarMenu = [
@@ -51,8 +47,17 @@
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
             cart.push({nama, harga, kalori});
             localStorage.setItem('cart', JSON.stringify(cart));
-            alert(nama + " ditambahkan ke keranjang!");
+            updateWidget();
+            alert(nama + " ditambahkan!");
         }
+
+        function updateWidget() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let total = cart.reduce((sum, item) => sum + item.harga, 0);
+            document.getElementById('cartCount').innerText = cart.length;
+            document.getElementById('cartTotal').innerText = "Rp " + total.toLocaleString();
+        }
+        updateWidget();
     </script>
 </body>
 </html>
