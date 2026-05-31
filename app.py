@@ -3,18 +3,18 @@ import streamlit as st
 # --- KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="G-HEats - Garut Healthy Eats", page_icon="🥗", layout="wide")
 
-# --- CUSTOM CSS ---
+# --- CUSTOM CSS (Tanpa Logo & Footer) ---
 st.markdown("""
 <style>
-    /* 1. KODE UNTUK MENYEMBUNYIKAN LOGO GITHUB & BAWAAN STREAMLIT */
+    /* Menyembunyikan elemen bawaan Streamlit */
     #MainMenu {visibility: hidden;}
     header {visibility: hidden;}
     footer {visibility: hidden;}
     .stDeployButton {display:none;}
     .viewerBadge_container__1QSob {display: none;}
     
-    /* 2. KODE DESAIN TAMPILAN G-HEATS (Sama seperti sebelumnya) */
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap');
+    
     html, body, [class*="css"]  {
         font-family: 'Plus Jakarta Sans', sans-serif;
         background-color: #F4F7F5;
@@ -29,11 +29,12 @@ st.markdown("""
     .badge-price { color: #1976D2; font-weight: 700; font-size: 1.1rem; }
 </style>
 """, unsafe_allow_html=True)
-# Session State digunakan agar data tidak hilang saat tombol ditekan (halaman direfresh)
+
+# --- INISIALISASI SESSION STATE ---
 if 'cart' not in st.session_state:
     st.session_state.cart = []
 if 'target_kalori' not in st.session_state:
-    st.session_state.target_kalori = 1500 # Default target
+    st.session_state.target_kalori = 1500 
 if 'total_kalori' not in st.session_state:
     st.session_state.total_kalori = 0
 if 'total_protein' not in st.session_state:
@@ -87,7 +88,6 @@ with st.sidebar:
     st.write("---")
     menu_nav = st.radio("Navigasi Aplikasi", ["Katalog Menu Sehat", "Smart Nutrition Tracker", "Konsultasi Gizi & Komunitas"])
     
-    # Keranjang Belanja di Sidebar
     st.write("---")
     st.markdown("### 🛒 Keranjang Hari Ini")
     if len(st.session_state.cart) > 0:
@@ -107,7 +107,7 @@ if menu_nav == "Katalog Menu Sehat":
     
     kategori = st.tabs(["Semua Menu", "Main Course (Rendah Kalori)", "Clean Comfort & Snacks"])
     
-   def render_menu(filtered_menus, tab_name):
+    def render_menu(filtered_menus, tab_name):
         cols = st.columns(3)
         for idx, item in enumerate(filtered_menus):
             with cols[idx % 3]:
@@ -124,7 +124,6 @@ if menu_nav == "Katalog Menu Sehat":
                 </div>
                 """, unsafe_allow_html=True)
                 
-                # Perbaikan: Menambahkan tab_name pada key agar tidak duplikat
                 if st.button(f"Pesan Sekarang", key=f"btn_{item['nama']}_{idx}_{tab_name}"):
                     add_to_cart(item)
                     st.toast(f"✅ {item['nama']} ditambahkan ke keranjang Tracker!")
@@ -137,27 +136,23 @@ if menu_nav == "Katalog Menu Sehat":
 elif menu_nav == "Smart Nutrition Tracker":
     st.markdown("<h2 style='color:#1E4620;'>📊 Smart Nutrition Tracker</h2>", unsafe_allow_html=True)
     
-    # Kalkulator Target Kalori Harian
     with st.expander("⚙️ Atur Ulang Target Kalori (Kalkulator)"):
         c1, c2 = st.columns(2)
         berat = c1.number_input("Berat Badan (kg)", value=65)
         tinggi = c2.number_input("Tinggi Badan (cm)", value=165)
         if st.button("Hitung Target Defisit Kalori"):
-            # Rumus kasar sederhana untuk demonstrasi
             target_baru = int((berat * 10) + (tinggi * 6.25) - 500) 
             st.session_state.target_kalori = target_baru
             st.success(f"Target kalori harian disetel ke {target_baru} kkal untuk defisit.")
 
     st.write("### Progres Konsumsi Hari Ini")
     
-    # Menghitung persentase progres
     persentase = st.session_state.total_kalori / st.session_state.target_kalori
-    if persentase > 1.0: persentase = 1.0 # Maksimal bar 100%
+    if persentase > 1.0: persentase = 1.0 
     
     st.progress(persentase)
     st.markdown(f"<p style='font-size:1.2rem; font-weight:600; color:#2E7D32;'>✨ {int(persentase*100)}% Terpenuhi ({st.session_state.total_kalori} / {st.session_state.target_kalori} kkal)</p>", unsafe_allow_html=True)
     
-    # Grafik Makronutrisi Dinamis dari Keranjang
     st.markdown("<div class='card'>", unsafe_allow_html=True)
     st.write("**Total Makronutrisi dari pesananmu:**")
     col1, col2, col3 = st.columns(3)
