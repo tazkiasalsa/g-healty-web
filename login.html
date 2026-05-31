@@ -4,24 +4,51 @@
     <meta charset="UTF-8">
     <title>Login - G-HEats</title>
     <style>
-        body { font-family: sans-serif; background-color: #f4fcf4; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .login-box { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
-        input { padding: 10px; width: 80%; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px; }
-        button { padding: 10px 20px; background: #2d5a27; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        body { font-family: sans-serif; background-color: #f4fcf4; padding: 20px; }
+        .box { background: white; padding: 20px; border-radius: 15px; max-width: 400px; margin: auto; }
+        input, select { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #2d5a27; color: white; border: none; border-radius: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
-    <div class="login-box">
-        <h2>Selamat Datang di G-HEats</h2>
-        <input type="text" id="namaInput" placeholder="Masukkan nama Anda">
-        <br>
-        <button onclick="saveName()">Masuk</button>
+    <div class="box">
+        <h2>Data Diri G-HEats</h2>
+        <input type="text" id="nama" placeholder="Nama">
+        <input type="number" id="bb" placeholder="Berat Badan (kg)">
+        <input type="number" id="tb" placeholder="Tinggi Badan (cm)">
+        <input type="number" id="usia" placeholder="Usia">
+        <select id="gender">
+            <option value="pria">Pria</option>
+            <option value="wanita">Wanita</option>
+        </select>
+        <select id="aktivitas">
+            <option value="1.2">Jarang aktif</option>
+            <option value="1.375">Sedikit aktif</option>
+            <option value="1.55">Cukup aktif</option>
+            <option value="1.725">Sangat aktif</option>
+            <option value="1.9">Ekstra aktif</option>
+        </select>
+        <select id="tujuan">
+            <option value="-500">Turunkan Berat Badan (-500 kcal)</option>
+            <option value="0">Jaga Berat Badan</option>
+            <option value="500">Naikkan Berat Badan (+500 kcal)</option>
+        </select>
+        <button onclick="simpanData()">Mulai Hitung Kalori</button>
     </div>
+
     <script>
-        function saveName() {
-            let nama = document.getElementById("namaInput").value;
-            if (nama) { localStorage.setItem("username", nama); window.location.href = "index.html"; }
-            else { alert("Masukkan nama terlebih dahulu!"); }
+        function simpanData() {
+            let data = {
+                nama: document.getElementById('nama').value,
+                bb: document.getElementById('bb').value,
+                tb: document.getElementById('tb').value,
+                usia: document.getElementById('usia').value,
+                gender: document.getElementById('gender').value,
+                aktivitas: document.getElementById('aktivitas').value,
+                tujuan: document.getElementById('tujuan').value
+            };
+            localStorage.setItem("userData", JSON.stringify(data));
+            window.location.href = "index.html";
         }
     </script>
 </body>
