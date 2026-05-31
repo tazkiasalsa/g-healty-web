@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Keranjang Anda</h2>
+    <div id="listKeranjang"></div>
+    <h3>Total Harga: <span id="totalHarga">0</span></h3>
+    <button onclick="checkout()">Checkout</button>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let list = document.getElementById('listKeranjang');
+        let totalH = 0;
+        let totalK = 0;
+
+        cart.forEach(item => {
+            list.innerHTML += `<p>${item.nama} - Rp ${item.harga}</p>`;
+            totalH += item.harga;
+            totalK += item.kalori;
+        });
+        document.getElementById('totalHarga').innerText = totalH;
+
+        function checkout() {
+            localStorage.setItem('totalKaloriHarian', totalK);
+            alert("Pesanan berhasil! Total kalori tersimpan.");
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>
