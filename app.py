@@ -107,7 +107,7 @@ if menu_nav == "Katalog Menu Sehat":
     
     kategori = st.tabs(["Semua Menu", "Main Course (Rendah Kalori)", "Clean Comfort & Snacks"])
     
-    def render_menu(filtered_menus):
+   def render_menu(filtered_menus, tab_name):
         cols = st.columns(3)
         for idx, item in enumerate(filtered_menus):
             with cols[idx % 3]:
@@ -124,14 +124,14 @@ if menu_nav == "Katalog Menu Sehat":
                 </div>
                 """, unsafe_allow_html=True)
                 
-                # Tombol "Pesan" yang memicu fungsi add_to_cart
-                if st.button(f"Pesan Sekarang", key=f"btn_{item['nama']}_{idx}"):
+                # Perbaikan: Menambahkan tab_name pada key agar tidak duplikat
+                if st.button(f"Pesan Sekarang", key=f"btn_{item['nama']}_{idx}_{tab_name}"):
                     add_to_cart(item)
                     st.toast(f"✅ {item['nama']} ditambahkan ke keranjang Tracker!")
 
-    with kategori[0]: render_menu(menus)
-    with kategori[1]: render_menu([m for m in menus if m['cat'] == 'Main'])
-    with kategori[2]: render_menu([m for m in menus if m['cat'] == 'Snack'])
+    with kategori[0]: render_menu(menus, "semua")
+    with kategori[1]: render_menu([m for m in menus if m['cat'] == 'Main'], "main")
+    with kategori[2]: render_menu([m for m in menus if m['cat'] == 'Snack'], "snack")
 
 # --- HALAMAN 2: SMART NUTRITION TRACKER ---
 elif menu_nav == "Smart Nutrition Tracker":
