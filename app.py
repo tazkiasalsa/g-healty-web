@@ -1,9 +1,9 @@
 import streamlit as st
 
-# --- KONFIGURASI HALAMAN ---
-st.set_page_config(page_title="G-HEats - Garut Healthy Eats", page_icon="🥗", layout="wide")
+# --- KONFIGURASI HALAMAN (Harus Paling Atas) ---
+st.set_page_config(page_title="G-HEats App", page_icon="🥗", layout="centered")
 
-# --- CUSTOM CSS (Tanpa Logo & Footer) ---
+# --- CUSTOM CSS (Menyembunyikan Logo & Membuat Desain Ala Aplikasi HP) ---
 st.markdown("""
 <style>
     /* Menyembunyikan elemen bawaan Streamlit */
@@ -13,169 +13,112 @@ st.markdown("""
     .stDeployButton {display:none;}
     .viewerBadge_container__1QSob {display: none;}
     
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap');
+    /* Mengimpor Font */
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap');
     
+    /* Desain Dasar */
     html, body, [class*="css"]  {
         font-family: 'Plus Jakarta Sans', sans-serif;
-        background-color: #F4F7F5;
+        background-color: #F4FBF6; /* Hijau sangat muda ala aplikasi */
     }
-    .main-title { color: #1E4620; font-weight: 700; font-size: 2.8rem; margin-bottom: 5px; }
-    .subtitle { color: #556B2F; font-size: 1.1rem; margin-bottom: 25px; }
-    .card { background-color: #ffffff; padding: 20px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; border-left: 5px solid #2E7D32; }
-    .menu-card { background-color: #ffffff; border-radius: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.04); overflow: hidden; margin-bottom: 25px; transition: transform 0.2s; border: 1px solid #eee; }
-    .menu-card:hover { transform: translateY(-5px); }
-    .menu-desc { padding: 15px; }
-    .badge-cal { background-color: #E8F5E9; color: #2E7D32; padding: 4px 10px; border-radius: 8px; font-weight: 600; font-size: 0.85rem; }
-    .badge-price { color: #1976D2; font-weight: 700; font-size: 1.1rem; }
+    
+    /* Styling Kartu & Elemen */
+    .app-container { max-width: 500px; margin: auto; }
+    .header-title { font-size: 1.5rem; font-weight: 700; color: #113214; }
+    .card { background: white; border-radius: 16px; padding: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); margin-bottom: 15px; border: 1px solid #E8F5E9; }
+    .card-img-top { border-radius: 12px; width: 100%; height: 140px; object-fit: cover; margin-bottom: 10px; }
+    .tag-green { background: #E8F5E9; color: #2E7D32; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; display: inline-block;}
+    .menu-row { display: flex; align-items: center; background: white; border-radius: 16px; padding: 12px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); border: 1px solid #eee; }
+    .menu-img { width: 80px; height: 80px; border-radius: 12px; object-fit: cover; margin-right: 15px; }
+    .menu-info h4 { margin: 0 0 5px 0; font-size: 1rem; color: #1E4620; }
+    .menu-info p { margin: 0; font-size: 0.85rem; color: #666; }
+    .point-card { background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); padding: 20px; border-radius: 16px; text-align: center; margin-bottom: 20px;}
+    .doctor-card { display: flex; align-items: center; background: white; padding: 15px; border-radius: 16px; border: 1px solid #4CAF50; }
 </style>
 """, unsafe_allow_html=True)
 
-# --- INISIALISASI SESSION STATE ---
-if 'cart' not in st.session_state:
-    st.session_state.cart = []
-if 'target_kalori' not in st.session_state:
-    st.session_state.target_kalori = 1500 
-if 'total_kalori' not in st.session_state:
-    st.session_state.total_kalori = 0
-if 'total_protein' not in st.session_state:
-    st.session_state.total_protein = 0
-if 'total_karbo' not in st.session_state:
-    st.session_state.total_karbo = 0
-if 'total_lemak' not in st.session_state:
-    st.session_state.total_lemak = 0
-if 'total_harga' not in st.session_state:
-    st.session_state.total_harga = 0
+# --- SISTEM NAVIGASI (Mewakili Bottom Nav) ---
+tab1, tab2, tab3, tab4 = st.tabs(["🏠 Home", "🍲 Menu", "🍱 Katering", "🎁 Reward"])
 
-# --- FUNGSI TAMBAH KE KERANJANG ---
-def add_to_cart(item):
-    st.session_state.cart.append(item['nama'])
-    st.session_state.total_kalori += item['kalori_num']
-    st.session_state.total_harga += item['harga_num']
-    st.session_state.total_protein += item['protein']
-    st.session_state.total_karbo += item['karbo']
-    st.session_state.total_lemak += item['lemak']
+# ==========================================
+# TAB 1: HOME / DASHBOARD
+# ==========================================
+with tab1:
+    st.markdown("<div class='header-title'>Halo, Fitri! 👋</div>", unsafe_allow_html=True)
+    st.write("Mari penuhi nutrisi harianmu hari ini.")
+    
+    # Progress Bar Harian
+    st.markdown("""
+    <div class="card" style="text-align:center; border-top: 4px solid #4CAF50;">
+        <h2 style="color:#2E7D32; margin:0; font-size: 2.5rem;">70%</h2>
+        <p style="margin:0; color:#555; font-weight:600;">Target Harian: 1800 kcal</p>
+        <p style="font-size:0.8rem; color:#888;">🟢 Terpenuhi 1260 kcal</p>
+    </div>
+    """, unsafe_allow_html=True)
+    st.progress(0.7)
+    
+    st.markdown("### Sajian Hari Ini")
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown("""
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500" class="card-img-top">
+            <h5 style="margin:0;">Salmon Panggang</h5>
+            <span class="tag-green">410 kcal</span>
+        </div>
+        """, unsafe_allow_html=True)
+    with col2:
+        st.markdown("""
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1628557044797-f21a177c37ec?w=500" class="card-img-top">
+            <h5 style="margin:0;">Smoothie Detox</h5>
+            <span class="tag-green">250 kcal</span>
+        </div>
+        """, unsafe_allow_html=True)
 
-def reset_cart():
-    st.session_state.cart = []
-    st.session_state.total_kalori = 0
-    st.session_state.total_harga = 0
-    st.session_state.total_protein = 0
-    st.session_state.total_karbo = 0
-    st.session_state.total_lemak = 0
-
-# --- DATA MENU ---
-menus = [
-    {"nama": "Salmon Mentai Shirataki", "kalori_num": 380, "harga_num": 45000, "protein": 30, "karbo": 25, "lemak": 15, "img": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500", "cat": "Main"},
-    {"nama": "Ayam Geprek Oat Garut", "kalori_num": 410, "harga_num": 28000, "protein": 35, "karbo": 30, "lemak": 12, "img": "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=500", "cat": "Main"},
-    {"nama": "Nila Bakar Madu Cikajang", "kalori_num": 320, "harga_num": 32000, "protein": 28, "karbo": 20, "lemak": 10, "img": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=500", "cat": "Main"},
-    {"nama": "Sate Lilit Ayam Quinoa", "kalori_num": 290, "harga_num": 30000, "protein": 25, "karbo": 22, "lemak": 9, "img": "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=500", "cat": "Main"},
-    {"nama": "Soto Ayam Bening Beras Merah", "kalori_num": 280, "harga_num": 25000, "protein": 22, "karbo": 35, "lemak": 5, "img": "https://images.unsplash.com/photo-1547592165-e1d17f57655c?w=500", "cat": "Snack"},
-    {"nama": "Chia Seed Pudding Mangga", "kalori_num": 150, "harga_num": 18000, "protein": 5, "karbo": 20, "lemak": 6, "img": "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=500", "cat": "Snack"},
-]
-
-# --- SIDEBAR & NAVIGASI ---
-with st.sidebar:
-    st.image("https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=150", width=80)
-    st.markdown("### Halo, Fit-User! 👋")
+# ==========================================
+# TAB 2: PEMESANAN & LANGGANAN
+# ==========================================
+with tab2:
+    st.markdown("<div class='header-title'>Pemesanan Menu</div>", unsafe_allow_html=True)
     
     st.markdown("""
-    <div style='background-color: #E3F2FD; padding: 15px; border-radius: 12px; border-left: 4px solid #1E88E5;'>
-        <p style='margin:0; font-size:0.9rem; color:#1565C0;'>G-HEats Rewards Balance</p>
-        <h3 style='margin:0; color:#0D47A1;'>✨ 2,150 Poin</h3>
+    <div style="background-color:#2E7D32; color:white; padding:20px; border-radius:16px; margin-bottom:20px; background-image: url('https://images.unsplash.com/photo-1498837167922-41cfa6f318f4?w=800'); background-size:cover; background-blend-mode: multiply;">
+        <h2 style="margin:0;">Ubah Jajanan<br>Favoritmu!</h2>
+        <p style="margin:0; opacity:0.8;">Lebih sehat, lebih nikmat.</p>
     </div>
     """, unsafe_allow_html=True)
     
-    st.write("---")
-    menu_nav = st.radio("Navigasi Aplikasi", ["Katalog Menu Sehat", "Smart Nutrition Tracker", "Konsultasi Gizi & Komunitas"])
+    # List Menu
+    menus = [
+        {"img": "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=200", "nama": "Geprek Oat Rendah Natrium", "kal": "450 kcal"},
+        {"img": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200", "nama": "Bakso Ikan Nila Kuah Bening", "kal": "380 kcal"},
+        {"img": "https://images.unsplash.com/photo-1603048297172-c92544798d5e?w=200", "nama": "Nasi Goreng Merah Organik", "kal": "400 kcal"}
+    ]
     
-    st.write("---")
-    st.markdown("### 🛒 Keranjang Hari Ini")
-    if len(st.session_state.cart) > 0:
-        for p in st.session_state.cart:
-            st.markdown(f"- {p}")
-        st.markdown(f"**Total: Rp {st.session_state.total_harga:,}**")
-        if st.button("Kosongkan Keranjang", type="secondary"):
-            reset_cart()
-            st.rerun()
-    else:
-        st.info("Keranjang masih kosong.")
-
-# --- HALAMAN 1: KATALOG MENU ---
-if menu_nav == "Katalog Menu Sehat":
-    st.markdown("<h1 class='main-title'>Garut Healthy Eats 🥗</h1>", unsafe_allow_html=True)
-    st.markdown("<p class='subtitle'>Mengubah makanan 'berdosa' menjadi menu sehat premium tanpa hambar.</p>", unsafe_allow_html=True)
-    
-    kategori = st.tabs(["Semua Menu", "Main Course (Rendah Kalori)", "Clean Comfort & Snacks"])
-    
-    def render_menu(filtered_menus, tab_name):
-        cols = st.columns(3)
-        for idx, item in enumerate(filtered_menus):
-            with cols[idx % 3]:
-                st.markdown(f"""
-                <div class="menu-card">
-                    <img src="{item['img']}" style="width:100%; height:200px; object-fit:cover;">
-                    <div class="menu-desc">
-                        <h4 style="margin:0 0 8px 0; color:#1E4620;">{item['nama']}</h4>
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                            <span class="badge-cal">🔥 {item['kalori_num']} kkal</span>
-                            <span class="badge-price">Rp {item['harga_num']:,}</span>
-                        </div>
-                    </div>
+    for menu in menus:
+        st.markdown(f"""
+        <div class="menu-row">
+            <img src="{menu['img']}" class="menu-img">
+            <div class="menu-info" style="flex:1;">
+                <h4>{menu['nama']}</h4>
+                <p>Mulai dari <strong style="color:#2E7D32;">{menu['kal']}</strong></p>
+                <div style="margin-top:5px;">
+                    <span class="tag-green">✅ Gizi Lengkap</span>
                 </div>
-                """, unsafe_allow_html=True)
-                
-                if st.button(f"Pesan Sekarang", key=f"btn_{item['nama']}_{idx}_{tab_name}"):
-                    add_to_cart(item)
-                    st.toast(f"✅ {item['nama']} ditambahkan ke keranjang Tracker!")
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
-    with kategori[0]: render_menu(menus, "semua")
-    with kategori[1]: render_menu([m for m in menus if m['cat'] == 'Main'], "main")
-    with kategori[2]: render_menu([m for m in menus if m['cat'] == 'Snack'], "snack")
-
-# --- HALAMAN 2: SMART NUTRITION TRACKER ---
-elif menu_nav == "Smart Nutrition Tracker":
-    st.markdown("<h2 style='color:#1E4620;'>📊 Smart Nutrition Tracker</h2>", unsafe_allow_html=True)
-    
-    with st.expander("⚙️ Atur Ulang Target Kalori (Kalkulator)"):
-        c1, c2 = st.columns(2)
-        berat = c1.number_input("Berat Badan (kg)", value=65)
-        tinggi = c2.number_input("Tinggi Badan (cm)", value=165)
-        if st.button("Hitung Target Defisit Kalori"):
-            target_baru = int((berat * 10) + (tinggi * 6.25) - 500) 
-            st.session_state.target_kalori = target_baru
-            st.success(f"Target kalori harian disetel ke {target_baru} kkal untuk defisit.")
-
-    st.write("### Progres Konsumsi Hari Ini")
-    
-    persentase = st.session_state.total_kalori / st.session_state.target_kalori
-    if persentase > 1.0: persentase = 1.0 
-    
-    st.progress(persentase)
-    st.markdown(f"<p style='font-size:1.2rem; font-weight:600; color:#2E7D32;'>✨ {int(persentase*100)}% Terpenuhi ({st.session_state.total_kalori} / {st.session_state.target_kalori} kkal)</p>", unsafe_allow_html=True)
-    
-    st.markdown("<div class='card'>", unsafe_allow_html=True)
-    st.write("**Total Makronutrisi dari pesananmu:**")
-    col1, col2, col3 = st.columns(3)
-    col1.metric(label="🥩 Protein", value=f"{st.session_state.total_protein}g")
-    col2.metric(label="🍚 Karbohidrat", value=f"{st.session_state.total_karbo}g")
-    col3.metric(label="🥑 Lemak Baik", value=f"{st.session_state.total_lemak}g")
-    st.markdown("</div>", unsafe_allow_html=True)
-
-# --- HALAMAN 3: KONSULTASI & KOMUNITAS ---
-elif menu_nav == "Konsultasi Gizi & Komunitas":
-    st.markdown("<h2 style='color:#1E4620;'>💬 Konsultasi Gizi Gratis & Healthy Squad</h2>", unsafe_allow_html=True)
+# ==========================================
+# TAB 3: KATERING SEHAT
+# ==========================================
+with tab3:
+    st.markdown("<div class='header-title'>Katering Sehat</div>", unsafe_allow_html=True)
     
     st.markdown("""
-    <div class="card" style="border-left: 5px solid #1E88E5;">
-        <h4 style="margin:0 0 5px 0; color:#1565C0;">💬 Chat dengan Ahli Gizi Kami</h4>
-        <p style="margin:0; font-size:0.9rem; color:#555;">Konsultasikan berat badan idealmu langsung dengan Ahli Gizi G-HEats!</p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    user_msg = st.text_input("Ketik pertanyaan Anda...")
-    if st.button("Kirim"):
-        if user_msg: st.success("Pesan terkirim! Ahli gizi akan membalas segera.")
-            
-    st.write("---")
-    st.markdown("### 👥 Komunitas 'Healthy Squad'")
-    st.text_area("Live Feed", value="Mhs_Uniga99: Ayam Geprek Oat enak parah!\nDietGarut_Fit: Besok jalan pagi di Kerkof yuk teman-teman!", height=100, disabled=True)
+    <div class="card" style="padding:0; overflow:hidden;">
+        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800" style="width:100%; height:200px; object-fit:cover;">
+        <div style="padding: 15px;">
+            <h3 style="margin:0 0 5px 0;">Salmon Mentai Rice Shirataki</h3>
+            <span class="tag-green">
