@@ -11,21 +11,14 @@
         .price { font-weight: bold; color: #d32f2f; }
         button { background: #2d5a27; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; }
         .cart-widget { position: fixed; top: 20px; right: 20px; background: #2d5a27; color: white; padding: 10px 15px; border-radius: 20px; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); text-decoration: none; z-index: 1000; font-size: 14px; }
-        .nav-footer { text-align: center; margin-top: 30px; margin-bottom: 30px; padding: 20px; }
-        .nav-footer a { color: #2d5a27; text-decoration: none; font-weight: bold; font-size: 16px; }
+        .nav-footer { text-align: center; margin-top: 30px; margin-bottom: 30px; }
     </style>
 </head>
 <body>
     <a href="keranjang.html" class="cart-widget"><span>🛒</span><span id="cartCount">0</span> | <span id="cartTotal">Rp 0</span></a>
-    
-    <h2 style="text-align: center; color: #2d5a27; margin-top: 80px;">Menu Utama G-HEats</h2>
-    
+    <h2 style="text-align: center; color: #2d5a27; margin-top: 60px;">Menu Utama</h2>
     <div id="menuContainer"></div>
-
-    <!-- Tombol Kembali yang Anda minta -->
-    <div class="nav-footer">
-        <a href="index.html">← Kembali ke Home</a>
-    </div>
+    <div class="nav-footer"><a href="index.html" style="color: #2d5a27; font-weight: bold;">← Kembali ke Home</a></div>
 
     <script>
         const daftarMenu = [
@@ -41,7 +34,7 @@
         daftarMenu.forEach(item => {
             container.innerHTML += `
                 <div class="card">
-                    <img src="${item.img}" class="menu-img" alt="${item.nama}">
+                    <img src="${item.img}" class="menu-img">
                     <div class="info">
                         <h3>${item.nama}</h3>
                         <p>${item.kalori} kcal | <span class="price">Rp ${item.harga.toLocaleString()}</span></p>
@@ -55,17 +48,9 @@
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
             cart.push({nama, harga, kalori});
             localStorage.setItem('cart', JSON.stringify(cart));
-            updateWidget();
             alert(nama + " ditambahkan!");
+            location.reload();
         }
-
-        function updateWidget() {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            let total = cart.reduce((sum, item) => sum + item.harga, 0);
-            document.getElementById('cartCount').innerText = cart.length;
-            document.getElementById('cartTotal').innerText = "Rp " + total.toLocaleString();
-        }
-        updateWidget();
     </script>
 </body>
 </html>
