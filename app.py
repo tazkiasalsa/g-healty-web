@@ -10,7 +10,6 @@ st.markdown("""
     header {visibility: hidden;}
     footer {visibility: hidden;}
     .stDeployButton {display:none;}
-    .viewerBadge_container__1QSob {display: none;}
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap');
     html, body, [class*="css"]  {
         font-family: 'Plus Jakarta Sans', sans-serif;
@@ -65,13 +64,12 @@ with tab1:
 with tab2:
     st.markdown("<div class='header-title'>Pemesanan Menu</div>", unsafe_allow_html=True)
     st.markdown("""
-    <div style="background-color:#2E7D32; color:white; padding:20px; border-radius:16px; margin-bottom:20px; background-image: url('https://images.unsplash.com/photo-1498837167922-41cfa6f318f4?w=800'); background-size:cover; background-blend-mode: multiply;">
+    <div style="background-color:#2E7D32; color:white; padding:20px; border-radius:16px; margin-bottom:20px;">
         <h2 style="margin:0;">Ubah Jajanan<br>Favoritmu!</h2>
         <p style="margin:0; opacity:0.8;">Lebih sehat, lebih nikmat.</p>
     </div>
     """, unsafe_allow_html=True)
     
-    # Format list dipecah ke bawah agar aman dari error copy-paste
     menus = [
         {
             "img": "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=200", 
@@ -90,12 +88,62 @@ with tab2:
         }
     ]
     
+    # Kode yang rawan error sudah dirombak total di bawah ini:
     for menu in menus:
-        st.markdown(f"""
-        <div class="menu-row">
-            <img src="{menu['img']}" class="menu-img">
-            <div class="menu-info" style="flex:1;">
-                <h4>{menu['nama']}</h4>
-                <p>Mulai dari <strong style="color:#2E7D32;">{menu['kal']}</strong></p>
-                <div style="margin-top:5px;">
-                    <span class="tag-green">✅ Gizi
+        html_content = '<div class="menu-row">'
+        html_content += '<img src="' + menu["img"] + '" class="menu-img">'
+        html_content += '<div class="menu-info" style="flex:1;">'
+        html_content += '<h4>' + menu["nama"] + '</h4>'
+        html_content += '<p>Mulai dari <strong style="color:#2E7D32;">' + menu["kal"] + '</strong></p>'
+        html_content += '<div style="margin-top:5px;"><span class="tag-green">✅ Gizi Lengkap</span></div>'
+        html_content += '</div></div>'
+        
+        st.markdown(html_content, unsafe_allow_html=True)
+
+with tab3:
+    st.markdown("<div class='header-title'>Katering Sehat</div>", unsafe_allow_html=True)
+    st.markdown("""
+    <div class="card" style="padding:0; overflow:hidden;">
+        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800" style="width:100%; height:200px; object-fit:cover;">
+        <div style="padding: 15px;">
+            <h3 style="margin:0 0 5px 0;">Salmon Mentai Shirataki</h3>
+            <span class="tag-green">380 kcal</span>
+            <p style="font-size:0.9rem; color:#666; margin-top:10px;">Menu premium dengan bahan lokal Garut, saus mentai rendah kalori yang aman untuk diet.</p>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("### Paket Katering")
+    c1, c2 = st.columns(2)
+    with c1:
+        st.markdown("<div class='card' style='text-align:center;'><h4>Paket Hemat<br>7 Hari</h4><button style='background:#4CAF50; color:white; border:none; padding:8px 15px; border-radius:20px; width:100%; margin-top:10px;'>Pilih</button></div>", unsafe_allow_html=True)
+    with c2:
+        st.markdown("<div class='card' style='text-align:center;'><h4>Paket Full<br>30 Hari</h4><button style='background:#4CAF50; color:white; border:none; padding:8px 15px; border-radius:20px; width:100%; margin-top:10px;'>Pilih</button></div>", unsafe_allow_html=True)
+
+with tab4:
+    st.markdown("<div class='header-title'>Komunitas & Reward</div>", unsafe_allow_html=True)
+    st.markdown("""
+    <div class="point-card">
+        <p style="margin:0; color:#2E7D32; font-weight:600;">G-HEats Point Balance</p>
+        <h1 style="margin:0; color:#1B5E20; font-size:2.8rem;">🌱 2150 Poin</h1>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("### Konsultasi Gizi Gratis")
+    st.markdown("""
+    <div class="doctor-card">
+        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=200" style="width:60px; height:60px; border-radius:30px; object-fit:cover; margin-right:15px;">
+        <div style="flex:1;">
+            <h4 style="margin:0;">Dr. Sarah 🩺</h4>
+            <p style="margin:0; font-size:0.85rem; color:#666;">Ahli Gizi, Garut</p>
+        </div>
+        <button style="background:#2E7D32; color:white; border:none; padding:8px 15px; border-radius:20px; cursor:pointer;">Chat</button>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("### Tukar Poinmu!")
+    rc1, rc2 = st.columns(2)
+    with rc1:
+        st.markdown("<div class='card' style='text-align:center;'>🏷️<br><b>Voucher Diskon</b></div>", unsafe_allow_html=True)
+    with rc2:
+        st.markdown("<div class='card' style='text-align:center;'>🥦<br><b>Produk Organik</b></div>", unsafe_allow_html=True)
