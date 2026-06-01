@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reward Tanaman Sehat</title>
     <style>
-        body { font-family: sans-serif; background-color: #f4fcf4; margin: 0; display: flex; justify-content: center; min-height: 100vh; }
+        body { font-family: sans-serif; background-color: #f4fcf4; margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh; }
         .container { background: white; width: 100%; max-width: 600px; padding: 20px; box-sizing: border-box; min-height: 100vh; text-align: center; }
         .poin-box { background: #2d5a27; color: white; padding: 20px; border-radius: 15px; margin-bottom: 20px; }
-        .card { background: #fff; border: 1px solid #ddd; padding: 15px; border-radius: 15px; margin-bottom: 15px; text-align: left; display: flex; justify-content: space-between; align-items: center; }
-        button { background: #2d5a27; color: white; border: none; padding: 8px 15px; border-radius: 10px; cursor: pointer; }
-        button:disabled { background: #ccc; }
+        .card { background: #fff; border: 1px solid #ddd; padding: 15px; border-radius: 15px; margin-bottom: 12px; text-align: left; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        button { background: #2d5a27; color: white; border: none; padding: 8px 15px; border-radius: 10px; cursor: pointer; font-weight: bold; }
+        button:hover { background: #3e7a37; }
+        h2 { color: #2d5a27; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -23,34 +24,48 @@
 
         <h3>Tukar Poin dengan Tanaman:</h3>
         <div id="rewardList">
+            <!-- Daftar Tanaman -->
             <div class="card">
-                <div><strong>Bibit Tomat</strong><br><small>50 Poin</small></div>
-                <button onclick="tukarPoin(50, 'Bibit Tomat')">Tukar</button>
+                <div><strong>Bibit Jagung</strong><br><small>200 Poin</small></div>
+                <button onclick="tukarPoin(200, 'Bibit Jagung')">Tukar</button>
             </div>
             <div class="card">
-                <div><strong>Bibit Cabai</strong><br><small>75 Poin</small></div>
-                <button onclick="tukarPoin(75, 'Bibit Cabai')">Tukar</button>
+                <div><strong>Bibit Tomat</strong><br><small>210 Poin</small></div>
+                <button onclick="tukarPoin(210, 'Bibit Tomat')">Tukar</button>
             </div>
             <div class="card">
-                <div><strong>Bibit Sawi</strong><br><small>100 Poin</small></div>
-                <button onclick="tukarPoin(100, 'Bibit Sawi')">Tukar</button>
+                <div><strong>Bibit Cabai</strong><br><small>230 Poin</small></div>
+                <button onclick="tukarPoin(230, 'Bibit Cabai')">Tukar</button>
+            </div>
+            <div class="card">
+                <div><strong>Bibit Kentang</strong><br><small>250 Poin</small></div>
+                <button onclick="tukarPoin(250, 'Bibit Kentang')">Tukar</button>
+            </div>
+            <div class="card">
+                <div><strong>Bibit Sawi</strong><br><small>250 Poin</small></div>
+                <button onclick="tukarPoin(250, 'Bibit Sawi')">Tukar</button>
+            </div>
+            <div class="card">
+                <div><strong>Bibit Wortel</strong><br><small>300 Poin</small></div>
+                <button onclick="tukarPoin(300, 'Bibit Wortel')">Tukar</button>
             </div>
         </div>
-        <a href="index.html" style="display:block; margin-top:20px; color:#2d5a27;">← Kembali ke Home</a>
+        <a href="index.html" style="display:block; margin-top:30px; color:#2d5a27; font-weight:bold; text-decoration: none;">← Kembali ke Home</a>
     </div>
 
     <script>
+        // Mengambil saldo poin dari localStorage
         let totalPoin = parseInt(localStorage.getItem('userPoin')) || 0;
         document.getElementById('totalPoin').innerText = totalPoin;
 
         function tukarPoin(harga, nama) {
             if (totalPoin >= harga) {
                 totalPoin -= harga;
-                localStorage.setItem('userPoin', totalPoin);
-                document.getElementById('totalPoin').innerText = totalPoin;
-                alert("Selamat! Anda telah menukarkan poin untuk " + nama);
+                localStorage.setItem('userPoin', totalPoin); // Simpan saldo baru
+                document.getElementById('totalPoin').innerText = totalPoin; // Update tampilan
+                alert("Selamat! Anda telah berhasil menukarkan poin untuk " + nama + ". Silakan ambil bibit di booth G-HEats!");
             } else {
-                alert("Poin Anda tidak cukup!");
+                alert("Poin Anda tidak cukup untuk menukar " + nama + "!");
             }
         }
     </script>
