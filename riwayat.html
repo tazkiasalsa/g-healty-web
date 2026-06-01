@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Riwayat Pembelian</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f4fcf4; padding: 20px; max-width: 500px; margin: auto; }
+        .card { background: white; padding: 15px; border-radius: 15px; margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .reset-btn { background: #555; color: white; border: none; padding: 10px; border-radius: 5px; width: 100%; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h2 style="color: #2d5a27; text-align: center;">📜 Riwayat Bulanan</h2>
+    <div id="riwayatContainer"></div>
+    <div style="margin-top:20px;">
+        <button class="reset-btn" onclick="hapusRiwayat()">Hapus Riwayat (Awal Bulan)</button>
+        <p style="text-align:center;"><a href="index.html">← Kembali ke Home</a></p>
+    </div>
+
+    <script>
+        let riwayat = JSON.parse(localStorage.getItem('riwayatPembelian')) || [];
+        const container = document.getElementById('riwayatContainer');
+        riwayat.forEach(entry => {
+            container.innerHTML += `
+                <div class="card">
+                    <p><strong>Tanggal:</strong> ${entry.tanggal}</p>
+                    <p><strong>Total:</strong> Rp ${entry.total.toLocaleString()}</p>
+                </div>
+            `;
+        });
+        function hapusRiwayat() { if(confirm("Hapus semua riwayat bulan ini?")) { localStorage.removeItem('riwayatPembelian'); location.reload(); } }
+    </script>
+</body>
+</html>
