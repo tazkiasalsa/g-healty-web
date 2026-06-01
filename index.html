@@ -9,7 +9,7 @@
         .container { background: white; width: 100%; max-width: 600px; padding: 20px; box-sizing: border-box; min-height: 100vh; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
         .calorie-box { background: #e8f5e9; padding: 20px; border-radius: 15px; margin: 20px 0; border: 1px solid #c8e6c9; text-align: center; }
         
-        /* Tombol Navigasi Hijau Seragam */
+        /* Tombol Navigasi Hijau */
         .btn-nav { 
             display: block; 
             background: #2d5a27; 
@@ -20,13 +20,13 @@
             font-weight: bold; 
             margin-bottom: 12px; 
             text-align: center;
-            transition: background 0.3s;
         }
-        .btn-nav:hover { background: #3e7a37; }
         
         .reset-btn { background: #f44336; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; margin-top: 10px; }
         .leaf-icon { color: #2d5a27; font-size: 1.2em; }
-        .riwayat-item { background: #fff; padding: 12px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        
+        /* Gaya Riwayat */
+        .card-riwayat { background: white; padding: 15px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
     </style>
 </head>
 <body>
@@ -41,12 +41,16 @@
             <button class="reset-btn" onclick="resetData()">Reset Harian</button>
         </div>
 
+        <!-- Tombol Menu Utama -->
         <a href="pemesanan.html" class="btn-nav">🍽️ Pesan Makanan</a>
         <a href="konsultasi.html" class="btn-nav">🩺 Konsultasi Dokter</a>
         <a href="reward.html" class="btn-nav">✨ Reward Tanaman</a>
 
+        <!-- Section Riwayat Pesanan -->
         <h3 style="color:#2d5a27; margin-top:30px;">📜 Riwayat Pesanan Terakhir</h3>
-        <div id="riwayatWidget"></div>
+        <div id="riwayatWidget">
+            <!-- Riwayat akan dimuat melalui JavaScript di sini -->
+        </div>
     </div>
 
     <script>
@@ -66,7 +70,7 @@
         elKalori.innerHTML = totalKalori + ' <span class="leaf-icon">🍃</span>';
         if (totalKalori > target) { elKalori.style.color = "red"; }
 
-        // 2. Fungsi Riwayat Pembelian
+        // 2. Fungsi Memuat Riwayat Pesanan
         function muatRiwayat() {
             let riwayat = JSON.parse(localStorage.getItem('riwayatPembelian')) || [];
             let widget = document.getElementById('riwayatWidget');
@@ -78,9 +82,9 @@
                 widget.innerHTML = ""; 
                 terbaru.forEach(entry => {
                     widget.innerHTML += `
-                        <div class="riwayat-item">
-                            <div><strong>${entry.tanggal}</strong></div>
-                            <div>Rp ${entry.total.toLocaleString()}</div>
+                        <div class="card-riwayat">
+                            <span>${entry.tanggal}</span>
+                            <strong>Rp ${entry.total.toLocaleString()}</strong>
                         </div>
                     `;
                 });
