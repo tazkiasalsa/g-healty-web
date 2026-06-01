@@ -8,9 +8,22 @@
         body { font-family: sans-serif; background-color: #f4fcf4; margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh; }
         .container { background: white; width: 100%; max-width: 600px; padding: 20px; box-sizing: border-box; min-height: 100vh; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
         .calorie-box { background: #e8f5e9; padding: 20px; border-radius: 15px; margin: 20px 0; border: 1px solid #c8e6c9; text-align: center; }
-        .btn-nav { display: block; background: #2d5a27; color: white; padding: 12px; border-radius: 10px; text-decoration: none; font-weight: bold; margin-bottom: 10px; text-align: center; }
-        .btn-cart { background: #d32f2f; }
-        .btn-reward { background: #ff9800; }
+        
+        /* Tombol Navigasi Hijau Seragam */
+        .btn-nav { 
+            display: block; 
+            background: #2d5a27; 
+            color: white; 
+            padding: 15px; 
+            border-radius: 10px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            margin-bottom: 12px; 
+            text-align: center;
+            transition: background 0.3s;
+        }
+        .btn-nav:hover { background: #3e7a37; }
+        
         .reset-btn { background: #f44336; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; margin-top: 10px; }
         .leaf-icon { color: #2d5a27; font-size: 1.2em; }
         .riwayat-item { background: #fff; padding: 12px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
@@ -29,8 +42,8 @@
         </div>
 
         <a href="pemesanan.html" class="btn-nav">🍽️ Pesan Makanan</a>
-        <a href="keranjang.html" class="btn-nav btn-cart">🛒 Keranjang</a>
-        <a href="reward.html" class="btn-nav btn-reward">✨ Reward Tanaman</a>
+        <a href="konsultasi.html" class="btn-nav">🩺 Konsultasi Dokter</a>
+        <a href="reward.html" class="btn-nav">✨ Reward Tanaman</a>
 
         <h3 style="color:#2d5a27; margin-top:30px;">📜 Riwayat Pesanan Terakhir</h3>
         <div id="riwayatWidget"></div>
@@ -59,7 +72,7 @@
             let widget = document.getElementById('riwayatWidget');
             
             if (riwayat.length === 0) {
-                widget.innerHTML = "<p style='color:#999; text-align:center;'>Belum ada pesanan.</p>";
+                widget.innerHTML = "<p style='color:#999; text-align:center;'>Belum ada riwayat pesanan.</p>";
             } else {
                 let terbaru = riwayat.slice(-3).reverse();
                 widget.innerHTML = ""; 
