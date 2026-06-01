@@ -14,6 +14,9 @@
         .poin-label { font-size: 0.85em; color: #2d5a27; font-weight: bold; margin-bottom: 5px; display: block; }
         button { background: #2d5a27; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; }
         .cart-widget { position: fixed; top: 20px; right: 20px; background: #2d5a27; color: white; padding: 10px 15px; border-radius: 20px; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); text-decoration: none; z-index: 1000; font-size: 14px; }
+        
+        /* Style untuk Riwayat */
+        .riwayat-item { background: white; padding: 12px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
     </style>
 </head>
 <body>
@@ -21,6 +24,11 @@
         <a href="keranjang.html" class="cart-widget">🛒 <span id="cartCount">0</span> | <span id="cartTotal">Rp 0</span></a>
         <h2 style="text-align: center; color: #2d5a27; margin-top: 60px;">Menu Utama</h2>
         <div id="menuContainer"></div>
+
+        <!-- Section Riwayat Pesanan -->
+        <h3 style="color:#2d5a27; margin-top:40px; border-top: 1px solid #ddd; padding-top: 20px;">📜 Riwayat Pesanan Terakhir</h3>
+        <div id="riwayatWidget"></div>
+
         <div style="text-align: center; margin-top: 30px;"><a href="index.html" style="color: #2d5a27; font-weight: bold;">← Kembali ke Home</a></div>
     </div>
 
@@ -71,7 +79,29 @@
             document.getElementById('cartTotal').innerText = "Rp " + cart.reduce((sum, item) => sum + item.harga, 0).toLocaleString();
         }
 
+        // Fungsi untuk menampilkan riwayat
+        function muatRiwayat() {
+            let riwayat = JSON.parse(localStorage.getItem('riwayatPembelian')) || [];
+            let widget = document.getElementById('riwayatWidget');
+            
+            if (riwayat.length === 0) {
+                widget.innerHTML = "<p style='color:#999; font-size: 14px;'>Belum ada riwayat pesanan.</p>";
+            } else {
+                let terbaru = riwayat.slice(-3).reverse();
+                widget.innerHTML = ""; 
+                terbaru.forEach(entry => {
+                    widget.innerHTML += `
+                        <div class="riwayat-item">
+                            <span>${entry.tanggal}</span>
+                            <strong>Rp ${entry.total.toLocaleString()}</strong>
+                        </div>
+                    `;
+                });
+            }
+        }
+
         updateWidget();
+        muatRiwayat();
     </script>
 </body>
 </html>
