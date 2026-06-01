@@ -2,43 +2,20 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Reward - G-HEats</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reward G-HEats</title>
     <style>
-        body { font-family: sans-serif; background-color: #f4fcf4; padding: 20px; max-width: 400px; margin: auto; }
-        .balance-box { background: #e8f5e9; padding: 20px; text-align: center; border-radius: 15px; color: #2d5a27; }
-        .reward-card { background: white; padding: 15px; border-radius: 10px; margin-top: 10px; border: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; }
-        button { background: #2d5a27; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; }
+        body { font-family: sans-serif; background-color: #f4fcf4; margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh; }
+        .container { background: white; width: 100%; max-width: 600px; padding: 20px; box-sizing: border-box; min-height: 100vh; text-align: center; }
     </style>
 </head>
 <body>
-    <h2>Komunitas & Reward</h2>
-    <div class="balance-box">
-        <p>G-HEats Point Balance</p>
-        <h1 id="pointCount">2150 Poin</h1>
+    <div class="container">
+        <h2 style="color: #2d5a27;">✨ Reward Anda</h2>
+        <p>Kumpulkan poin dari setiap pesanan sehatmu!</p>
+        <div style="font-size: 40px; margin: 30px;">🎁</div>
+        <p>Fitur reward akan segera hadir dengan penawaran menarik.</p>
+        <a href="index.html">← Kembali ke Home</a>
     </div>
-
-    <h3>Poin Reward-mu Bisa Ditukar!</h3>
-    <div class="reward-card">
-        <div><b>Voucher Supermarket Sehat</b><br><small>1000 Poin</small></div>
-        <button onclick="alert('Voucher berhasil ditukar! Cek email Anda.')">Tukar</button>
-    </div>
-    
-    <div class="reward-card">
-        <div><b>Paket Produk Garut Organik</b><br><small>2000 Poin</small></div>
-        <button onclick="pilihPaket()">Tukar</button>
-    </div>
-
-    <nav style="text-align: center; margin-top: 20px;"><a href="index.html">← Kembali ke Home</a></nav>
-
-    <script>
-        function pilihPaket() {
-            let pilihan = prompt("Pilih isi Paket Garut Organik Anda:\n1. Sayuran Organik Segar\n2. Olahan Ikan Nila\n3. Beras Merah/Hitam\n4. Produk Turunan OAT\n5. Herbal Lokal\n\nKetik nomor pilihan Anda:");
-            
-            if (pilihan) {
-                alert("Pilihan paket #" + pilihan + " berhasil ditukar! Tim kami akan segera menyiapkan pesanan Anda.");
-                // Logika untuk mengurangi poin bisa ditambahkan di sini
-            }
-        }
-    </script>
 </body>
 </html>
