@@ -2,16 +2,50 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - G-HEats</title>
     <style>
-        body { font-family: sans-serif; background-color: #f4fcf4; padding: 20px; }
-        .box { background: white; padding: 20px; border-radius: 15px; max-width: 400px; margin: auto; }
-        input, select { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background: #2d5a27; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        body { 
+            font-family: sans-serif; 
+            background-color: #f4fcf4; 
+            margin: 0; 
+            padding: 0; 
+            display: flex; 
+            justify-content: center; 
+            min-height: 100vh; 
+        }
+        .container { 
+            background: white; 
+            width: 100%; 
+            max-width: 600px; 
+            padding: 25px; 
+            box-sizing: border-box; 
+            min-height: 100vh; 
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+        input, select { 
+            width: 100%; 
+            padding: 12px; 
+            margin: 8px 0; 
+            border: 1px solid #ddd; 
+            border-radius: 10px; 
+            box-sizing: border-box; 
+        }
+        button { 
+            width: 100%; 
+            padding: 15px; 
+            background: #2d5a27; 
+            color: white; 
+            border: none; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            font-size: 16px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
-    <div class="box">
+    <div class="container">
         <h2>Data Diri G-HEats</h2>
         <input type="text" id="nama" placeholder="Nama">
         <input type="number" id="bb" placeholder="Berat Badan (kg)">
@@ -38,8 +72,11 @@
 
     <script>
         function simpanData() {
+            let namaVal = document.getElementById('nama').value;
+            if(!namaVal) { alert("Mohon isi nama Anda!"); return; }
+            
             let data = {
-                nama: document.getElementById('nama').value,
+                nama: namaVal,
                 bb: document.getElementById('bb').value,
                 tb: document.getElementById('tb').value,
                 usia: document.getElementById('usia').value,
