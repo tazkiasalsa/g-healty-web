@@ -11,13 +11,12 @@
         .cart-widget { position: fixed; top: 20px; right: 20px; background: #2d5a27; color: white; padding: 10px 15px; border-radius: 20px; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); text-decoration: none; z-index: 1000; font-size: 14px; }
         .leaf-icon { color: #2d5a27; font-size: 1.2em; }
         .reset-btn { background: #f44336; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; margin-top: 10px; }
-        nav { padding-top: 15px; border-top: 1px solid #eee; display: flex; justify-content: space-around; margin-top: 10px; }
-        nav a { text-decoration: none; color: #2d5a27; font-weight: bold; font-size: 14px; }
+        nav { padding-top: 15px; border-top: 1px solid #eee; display: flex; justify-content: space-around; margin-top: 10px; flex-wrap: wrap; }
+        nav a { text-decoration: none; color: #2d5a27; font-weight: bold; font-size: 13px; margin: 5px; }
     </style>
 </head>
 <body>
     <a href="keranjang.html" class="cart-widget"><span>🛒</span><span id="cartCount">0</span> | <span id="cartTotal">Rp 0</span></a>
-    
     <div class="container">
         <h2 style="color: #2d5a27;">🌿 G-HEats</h2>
         <h3 id="displayNama">Halo!</h3>
@@ -28,33 +27,27 @@
             <button class="reset-btn" onclick="resetData()">Reset Harian</button>
         </div>
         <a href="pemesanan.html"><button class="btn">Lihat Semua Menu</button></a>
-        
         <nav>
             <a href="index.html">🏠 Home</a>
             <a href="pemesanan.html">🍽️ Menu</a>
             <a href="reward.html">✨ Reward</a>
+            <a href="riwayat.html">📜 Riwayat</a>
         </nav>
     </div>
 
     <script>
         let data = JSON.parse(localStorage.getItem("userData"));
         if (!data) { window.location.href = "login.html"; }
-        
         let riwayat = JSON.parse(localStorage.getItem('riwayatMakan')) || [];
         let totalKalori = riwayat.reduce((sum, item) => sum + item.kalori, 0);
-        
         let bmr = (data.gender === 'pria') ? (10 * data.bb) + (6.25 * data.tb) - (5 * data.usia) + 5 : (10 * data.bb) + (6.25 * data.tb) - (5 * data.usia) - 161;
         let target = Math.round(bmr * parseFloat(data.aktivitas) + parseInt(data.tujuan));
-
         document.getElementById("displayNama").innerText = "Halo, " + data.nama + "!";
         document.getElementById("targetKalori").innerText = target;
-        
         let elKalori = document.getElementById('kaloriTerpenuhi');
         elKalori.innerHTML = totalKalori + ' <span class="leaf-icon">🍃</span>';
         if (totalKalori > target) { elKalori.style.color = "red"; }
-
         function resetData() { localStorage.removeItem('riwayatMakan'); location.reload(); }
-        
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         document.getElementById('cartCount').innerText = cart.length;
         document.getElementById('cartTotal').innerText = "Rp " + cart.reduce((sum, item) => sum + item.harga, 0).toLocaleString();
