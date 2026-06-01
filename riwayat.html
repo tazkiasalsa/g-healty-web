@@ -5,24 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Riwayat Pembelian</title>
     <style>
-        body { font-family: sans-serif; background-color: #f4fcf4; margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh; }
-        .container { background: white; width: 100%; max-width: 600px; padding: 20px; box-sizing: border-box; min-height: 100vh; }
-        .card { background: white; padding: 15px; border-radius: 15px; margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid #eee; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4fcf4; margin: 0; display: flex; justify-content: center; min-height: 100vh; }
+        .container { background: white; width: 100%; max-width: 600px; padding: 20px; box-sizing: border-box; }
+        h2 { color: #2d5a27; text-align: center; }
+        .card { background: #fff; border-left: 5px solid #2d5a27; padding: 15px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .item-list { font-size: 0.9em; color: #555; margin: 10px 0; padding-left: 20px; }
+        .total-price { font-weight: bold; color: #d32f2f; font-size: 1.1em; border-top: 1px solid #eee; padding-top: 10px; }
+        .btn-reset { background: #ff5252; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; width: 100%; font-weight: bold; }
+        .btn-home { display: block; text-align: center; margin-top: 20px; color: #2d5a27; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2 style="color: #2d5a27; text-align: center;">📜 Riwayat Bulanan</h2>
+        <h2>📜 Riwayat Bulanan</h2>
         <div id="riwayatContainer"></div>
-        <div style="text-align: center; margin-top: 20px;">
-            <button onclick="localStorage.removeItem('riwayatPembelian'); location.reload();" style="padding:10px; border-radius:5px; border:none; background:#555; color:white;">Reset Riwayat</button>
-            <p><a href="index.html">← Kembali ke Home</a></p>
-        </div>
+        
+        <button class="btn-reset" onclick="hapusRiwayat()">Hapus Semua Riwayat</button>
+        <a href="index.html" class="btn-home">← Kembali ke Home</a>
     </div>
+
     <script>
         let riwayat = JSON.parse(localStorage.getItem('riwayatPembelian')) || [];
         const container = document.getElementById('riwayatContainer');
-        riwayat.forEach(entry => container.innerHTML += `<div class="card"><p><strong>Tanggal:</strong> ${entry.tanggal}</p><p><strong>Total:</strong> Rp ${entry.total.toLocaleString()}</p></div>`);
+
+        if (riwayat.length === 0) {
+            container.innerHTML = "<p style='text-align:center; color:#999;'>Belum ada riwayat pembelian.</p>";
+        } else {
+            riwayat.forEach(entry => {
+                let itemsHtml = entry.items.map(i => `<li>${i.nama} - Rp ${i.harga.toLocaleString()}</li>`).join('');
+                container.innerHTML += `
+                    <div class="card">
+                        <div style="font-weight:bold; color:#2d5a27;">📅 ${entry.tanggal}</div>
+                        <ul class="item-list">${itemsHtml}</ul>
+                        <div class="total-price">Total: Rp ${entry.total.toLocaleString()}</div>
+                    </div>
+                `;
+            });
+        }
+
+        function hapusRiwayat() { 
+            if(confirm("Apakah Anda yakin ingin menghapus semua riwayat ini?")) { 
+                localStorage.removeItem('riwayatPembelian'); 
+                location.reload(); 
+            } 
+        }
     </script>
 </body>
 </html>
