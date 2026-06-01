@@ -7,27 +7,35 @@
     <style>
         body { font-family: sans-serif; background-color: #f4fcf4; margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh; }
         .container { background: white; width: 100%; max-width: 600px; padding: 20px; box-sizing: border-box; min-height: 100vh; }
+        
+        /* Widget Keranjang Tetap di Pojok Kanan Atas */
+        .cart-widget { position: fixed; top: 20px; right: 20px; background: #2d5a27; color: white; padding: 10px 15px; border-radius: 20px; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); text-decoration: none; z-index: 1000; font-size: 14px; }
+        
+        /* Box Riwayat di bawah Widget */
+        .riwayat-container { margin-top: 70px; background: #e8f5e9; padding: 15px; border-radius: 15px; margin-bottom: 20px; border: 1px solid #c8e6c9; }
+        .riwayat-item { background: white; padding: 8px 12px; border-radius: 8px; margin-top: 5px; font-size: 0.85em; display: flex; justify-content: space-between; border: 1px solid #eee; }
+        
         .card { background: white; padding: 15px; border-radius: 15px; margin-bottom: 12px; display: flex; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .menu-img { width: 80px; height: 80px; border-radius: 10px; object-fit: cover; background-color: #eee; }
         .info { flex-grow: 1; margin-left: 15px; }
         .price { font-weight: bold; color: #d32f2f; }
         .poin-label { font-size: 0.85em; color: #2d5a27; font-weight: bold; margin-bottom: 5px; display: block; }
         button { background: #2d5a27; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; }
-        .cart-widget { position: fixed; top: 20px; right: 20px; background: #2d5a27; color: white; padding: 10px 15px; border-radius: 20px; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); text-decoration: none; z-index: 1000; font-size: 14px; }
-        
-        /* Style untuk Riwayat */
-        .riwayat-item { background: white; padding: 12px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Widget Keranjang -->
         <a href="keranjang.html" class="cart-widget">🛒 <span id="cartCount">0</span> | <span id="cartTotal">Rp 0</span></a>
-        <h2 style="text-align: center; color: #2d5a27; margin-top: 60px;">Menu Utama</h2>
-        <div id="menuContainer"></div>
+        
+        <!-- Riwayat Pesanan Pindah ke Atas -->
+        <div class="riwayat-container">
+            <h4 style="margin: 0 0 10px 0; color: #2d5a27;">📜 Riwayat Pesanan Terakhir</h4>
+            <div id="riwayatWidget"></div>
+        </div>
 
-        <!-- Section Riwayat Pesanan -->
-        <h3 style="color:#2d5a27; margin-top:40px; border-top: 1px solid #ddd; padding-top: 20px;">📜 Riwayat Pesanan Terakhir</h3>
-        <div id="riwayatWidget"></div>
+        <h2 style="text-align: center; color: #2d5a27;">Menu Utama</h2>
+        <div id="menuContainer"></div>
 
         <div style="text-align: center; margin-top: 30px;"><a href="index.html" style="color: #2d5a27; font-weight: bold;">← Kembali ke Home</a></div>
     </div>
@@ -46,7 +54,6 @@
             if (harga < 10000) return 5;
             if (harga < 20000) return 10;
             if (harga < 30000) return 15;
-            if (harga < 40000) return 20;
             return 20;
         }
 
@@ -79,15 +86,14 @@
             document.getElementById('cartTotal').innerText = "Rp " + cart.reduce((sum, item) => sum + item.harga, 0).toLocaleString();
         }
 
-        // Fungsi untuk menampilkan riwayat
         function muatRiwayat() {
             let riwayat = JSON.parse(localStorage.getItem('riwayatPembelian')) || [];
             let widget = document.getElementById('riwayatWidget');
             
             if (riwayat.length === 0) {
-                widget.innerHTML = "<p style='color:#999; font-size: 14px;'>Belum ada riwayat pesanan.</p>";
+                widget.innerHTML = "<p style='margin:0; color:#666;'>Belum ada riwayat pesanan.</p>";
             } else {
-                let terbaru = riwayat.slice(-3).reverse();
+                let terbaru = riwayat.slice(-2).reverse();
                 widget.innerHTML = ""; 
                 terbaru.forEach(entry => {
                     widget.innerHTML += `
