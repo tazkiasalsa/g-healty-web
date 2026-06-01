@@ -25,18 +25,39 @@
         <button onclick="prosesCheckout()">Bayar Sekarang</button>
         <div style="text-align: center; margin-top: 20px;"><a href="pemesanan.html">← Kembali ke Menu</a></div>
     </div>
+
     <script>
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         const container = document.getElementById('cartItems');
-        cart.forEach(item => container.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:5px;"><span>${item.nama}</span><span>Rp ${item.harga.toLocaleString()}</span></div>`);
+        
+        // Tampilkan item di keranjang
+        cart.forEach(item => {
+            container.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:5px;"><span>${item.nama}</span><span>Rp ${item.harga.toLocaleString()}</span></div>`;
+        });
+
         function prosesCheckout() {
+            // 1. Simpan ke Riwayat Pembelian
             let riwayatBulanIni = JSON.parse(localStorage.getItem('riwayatPembelian')) || [];
-            riwayatBulanIni.push({ tanggal: new Date().toLocaleDateString(), items: cart, total: cart.reduce((sum, item) => sum + item.harga, 0) });
+            riwayatBulanIni.push({ 
+                tanggal: new Date().toLocaleDateString(), 
+                items: cart, 
+                total: cart.reduce((sum, item) => sum + item.harga, 0) 
+            });
             localStorage.setItem('riwayatPembelian', JSON.stringify(riwayatBulanIni));
+
+            // 2. Simpan ke Riwayat Kalori
             let riwayatKalori = JSON.parse(localStorage.getItem('riwayatMakan')) || [];
             localStorage.setItem('riwayatMakan', JSON.stringify(riwayatKalori.concat(cart)));
+
+            // 3. LOGIKA POIN: Tambahkan poin dari setiap menu ke total userPoin
+            let totalPoinDapat = cart.reduce((sum, item) => sum + (item.poin || 0), 0);
+            let poinSekarang = parseInt(localStorage.getItem('userPoin')) || 0;
+            localStorage.setItem('userPoin', poinSekarang + totalPoinDapat);
+
+            // 4. Bersihkan Keranjang
             localStorage.removeItem('cart'); 
-            alert("Pembayaran Berhasil!");
+            
+            alert("Pembayaran Berhasil! Anda mendapatkan " + totalPoinDapat + " poin.");
             window.location.href = "index.html";
         }
     </script>
