@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <title>G-HEats - Dashboard</title>
     <style>
+        /* CSS tetap sama, hapus saja bagian .cart-widget jika ingin menghemat ruang */
         body { font-family: sans-serif; background-color: #f4fcf4; padding: 20px; max-width: 400px; margin: auto; }
         .container { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
         .calorie-box { background: #e8f5e9; padding: 20px; border-radius: 15px; margin: 20px 0; border: 1px solid #c8e6c9; }
         .btn { background: #2d5a27; color: white; padding: 12px; border: none; border-radius: 10px; width: 100%; cursor: pointer; font-size: 16px; margin-bottom: 20px; }
-        .cart-widget { position: fixed; top: 20px; right: 20px; background: #2d5a27; color: white; padding: 10px 15px; border-radius: 20px; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); text-decoration: none; z-index: 1000; font-size: 14px; }
         .leaf-icon { color: #2d5a27; font-size: 1.2em; }
         .reset-btn { background: #f44336; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; margin-top: 10px; }
         nav { padding-top: 15px; border-top: 1px solid #eee; display: flex; justify-content: space-around; margin-top: 10px; flex-wrap: wrap; }
@@ -16,7 +16,8 @@
     </style>
 </head>
 <body>
-    <a href="keranjang.html" class="cart-widget"><span>🛒</span><span id="cartCount">0</span> | <span id="cartTotal">Rp 0</span></a>
+    <!-- Widget keranjang sudah dihapus dari sini -->
+
     <div class="container">
         <h2 style="color: #2d5a27;">🌿 G-HEats</h2>
         <h3 id="displayNama">Halo!</h3>
@@ -48,9 +49,6 @@
         elKalori.innerHTML = totalKalori + ' <span class="leaf-icon">🍃</span>';
         if (totalKalori > target) { elKalori.style.color = "red"; }
         function resetData() { localStorage.removeItem('riwayatMakan'); location.reload(); }
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        document.getElementById('cartCount').innerText = cart.length;
-        document.getElementById('cartTotal').innerText = "Rp " + cart.reduce((sum, item) => sum + item.harga, 0).toLocaleString();
     </script>
 </body>
 </html>
