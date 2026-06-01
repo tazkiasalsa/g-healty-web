@@ -16,9 +16,13 @@
 </head>
 <body>
     <a href="keranjang.html" class="cart-widget"><span>🛒</span><span id="cartCount">0</span> | <span id="cartTotal">Rp 0</span></a>
+    
     <h2 style="text-align: center; color: #2d5a27; margin-top: 60px;">Menu Utama</h2>
     <div id="menuContainer"></div>
-    <div class="nav-footer"><a href="index.html" style="color: #2d5a27; font-weight: bold;">← Kembali ke Home</a></div>
+    
+    <div class="nav-footer">
+        <a href="index.html" style="color: #2d5a27; font-weight: bold;">← Kembali ke Home</a>
+    </div>
 
     <script>
         const daftarMenu = [
@@ -31,10 +35,12 @@
         ];
 
         const container = document.getElementById('menuContainer');
+        
+        // Render daftar menu
         daftarMenu.forEach(item => {
             container.innerHTML += `
                 <div class="card">
-                    <img src="${item.img}" class="menu-img">
+                    <img src="${item.img}" class="menu-img" alt="${item.nama}">
                     <div class="info">
                         <h3>${item.nama}</h3>
                         <p>${item.kalori} kcal | <span class="price">Rp ${item.harga.toLocaleString()}</span></p>
@@ -44,13 +50,29 @@
             `;
         });
 
+        // Fungsi untuk menambah ke keranjang
         function tambahKeKeranjang(nama, harga, kalori) {
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
             cart.push({nama, harga, kalori});
             localStorage.setItem('cart', JSON.stringify(cart));
+            
             alert(nama + " ditambahkan!");
-            location.reload();
+            
+            // Panggil fungsi pembaruan agar widget langsung berubah
+            updateWidget(); 
         }
+
+        // Fungsi untuk memperbarui tampilan widget di layar
+        function updateWidget() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let total = cart.reduce((sum, item) => sum + item.harga, 0);
+            
+            document.getElementById('cartCount').innerText = cart.length;
+            document.getElementById('cartTotal').innerText = "Rp " + total.toLocaleString();
+        }
+
+        // Jalankan saat halaman pertama kali dimuat
+        updateWidget();
     </script>
 </body>
 </html>
