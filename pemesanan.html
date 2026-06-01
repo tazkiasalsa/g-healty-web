@@ -2,76 +2,45 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu G-HEats</title>
     <style>
-        body { font-family: sans-serif; background-color: #f4fcf4; padding: 20px; max-width: 500px; margin: auto; }
+        body { font-family: sans-serif; background-color: #f4fcf4; margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh; }
+        .container { background: white; width: 100%; max-width: 600px; padding: 20px; box-sizing: border-box; min-height: 100vh; }
         .card { background: white; padding: 15px; border-radius: 15px; margin-bottom: 12px; display: flex; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .menu-img { width: 80px; height: 80px; border-radius: 10px; object-fit: cover; }
         .info { flex-grow: 1; margin-left: 15px; }
         .price { font-weight: bold; color: #d32f2f; }
         button { background: #2d5a27; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; }
         .cart-widget { position: fixed; top: 20px; right: 20px; background: #2d5a27; color: white; padding: 10px 15px; border-radius: 20px; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); text-decoration: none; z-index: 1000; font-size: 14px; }
-        .nav-footer { text-align: center; margin-top: 30px; margin-bottom: 30px; }
     </style>
 </head>
 <body>
-    <a href="keranjang.html" class="cart-widget"><span>🛒</span><span id="cartCount">0</span> | <span id="cartTotal">Rp 0</span></a>
-    
-    <h2 style="text-align: center; color: #2d5a27; margin-top: 60px;">Menu Utama</h2>
-    <div id="menuContainer"></div>
-    
-    <div class="nav-footer">
-        <a href="index.html" style="color: #2d5a27; font-weight: bold;">← Kembali ke Home</a>
+    <div class="container">
+        <a href="keranjang.html" class="cart-widget"><span>🛒</span><span id="cartCount">0</span> | <span id="cartTotal">Rp 0</span></a>
+        <h2 style="text-align: center; color: #2d5a27; margin-top: 60px;">Menu Utama</h2>
+        <div id="menuContainer"></div>
+        <div style="text-align: center; margin-top: 30px;"><a href="index.html" style="color: #2d5a27; font-weight: bold;">← Kembali ke Home</a></div>
     </div>
 
     <script>
-        const daftarMenu = [
-            {nama: "Ayam Geprek", kalori: 450, harga: 25000, img: "Ayam-Geprek.jpg"},
-            {nama: "Steak Tempe Bakar", kalori: 300, harga: 18000, img: "Steak-Tempe-Bakar.jpg"},
-            {nama: "Bakso Nila Kuah Bening", kalori: 250, harga: 20000, img: "Bakso-Ikan-Nila-Kuah-Bening.jpg"},
-            {nama: "Edamame Rebus Garam Laut", kalori: 120, harga: 10000, img: "Edamame-Rebus-Garam-Laut.jpg"},
-            {nama: "Gado-gado Siram Kacang", kalori: 350, harga: 15000, img: "Gado-Gado-Siram-kacang.jpg"},
-            {nama: "Tahu Kukus Jamur", kalori: 180, harga: 12000, img: "Tahu-Kukus-Jamur.jpg"}
-        ];
-
+        const daftarMenu = [{nama: "Ayam Geprek", kalori: 450, harga: 25000, img: "Ayam-Geprek.jpg"}, {nama: "Steak Tempe Bakar", kalori: 300, harga: 18000, img: "Steak-Tempe-Bakar.jpg"}, {nama: "Bakso Nila Kuah Bening", kalori: 250, harga: 20000, img: "Bakso-Ikan-Nila-Kuah-Bening.jpg"}, {nama: "Edamame Rebus Garam Laut", kalori: 120, harga: 10000, img: "Edamame-Rebus-Garam-Laut.jpg"}, {nama: "Gado-gado Siram Kacang", kalori: 350, harga: 15000, img: "Gado-Gado-Siram-kacang.jpg"}, {nama: "Tahu Kukus Jamur", kalori: 180, harga: 12000, img: "Tahu-Kukus-Jamur.jpg"}];
         const container = document.getElementById('menuContainer');
-        
-        // Render daftar menu
         daftarMenu.forEach(item => {
-            container.innerHTML += `
-                <div class="card">
-                    <img src="${item.img}" class="menu-img" alt="${item.nama}">
-                    <div class="info">
-                        <h3>${item.nama}</h3>
-                        <p>${item.kalori} kcal | <span class="price">Rp ${item.harga.toLocaleString()}</span></p>
-                        <button onclick="tambahKeKeranjang('${item.nama}', ${item.harga}, ${item.kalori})">Pesan</button>
-                    </div>
-                </div>
-            `;
+            container.innerHTML += `<div class="card"><img src="${item.img}" class="menu-img"><div class="info"><h3>${item.nama}</h3><p>${item.kalori} kcal | <span class="price">Rp ${item.harga.toLocaleString()}</span></p><button onclick="tambahKeKeranjang('${item.nama}', ${item.harga}, ${item.kalori})">Pesan</button></div></div>`;
         });
-
-        // Fungsi untuk menambah ke keranjang
         function tambahKeKeranjang(nama, harga, kalori) {
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
             cart.push({nama, harga, kalori});
             localStorage.setItem('cart', JSON.stringify(cart));
-            
             alert(nama + " ditambahkan!");
-            
-            // Panggil fungsi pembaruan agar widget langsung berubah
             updateWidget(); 
         }
-
-        // Fungsi untuk memperbarui tampilan widget di layar
         function updateWidget() {
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            let total = cart.reduce((sum, item) => sum + item.harga, 0);
-            
             document.getElementById('cartCount').innerText = cart.length;
-            document.getElementById('cartTotal').innerText = "Rp " + total.toLocaleString();
+            document.getElementById('cartTotal').innerText = "Rp " + cart.reduce((sum, item) => sum + item.harga, 0).toLocaleString();
         }
-
-        // Jalankan saat halaman pertama kali dimuat
         updateWidget();
     </script>
 </body>
