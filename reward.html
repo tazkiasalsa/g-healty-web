@@ -3,19 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reward G-HEats</title>
+    <title>Reward Tanaman Sehat</title>
     <style>
-        body { font-family: sans-serif; background-color: #f4fcf4; margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh; }
+        body { font-family: sans-serif; background-color: #f4fcf4; margin: 0; display: flex; justify-content: center; min-height: 100vh; }
         .container { background: white; width: 100%; max-width: 600px; padding: 20px; box-sizing: border-box; min-height: 100vh; text-align: center; }
+        .poin-box { background: #2d5a27; color: white; padding: 20px; border-radius: 15px; margin-bottom: 20px; }
+        .card { background: #fff; border: 1px solid #ddd; padding: 15px; border-radius: 15px; margin-bottom: 15px; text-align: left; display: flex; justify-content: space-between; align-items: center; }
+        button { background: #2d5a27; color: white; border: none; padding: 8px 15px; border-radius: 10px; cursor: pointer; }
+        button:disabled { background: #ccc; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2 style="color: #2d5a27;">✨ Reward Anda</h2>
-        <p>Kumpulkan poin dari setiap pesanan sehatmu!</p>
-        <div style="font-size: 40px; margin: 30px;">🎁</div>
-        <p>Fitur reward akan segera hadir dengan penawaran menarik.</p>
-        <a href="index.html">← Kembali ke Home</a>
+        <h2>✨ Reward Tanaman</h2>
+        <div class="poin-box">
+            <p>Poin Anda saat ini:</p>
+            <h1 id="totalPoin">0</h1>
+        </div>
+
+        <h3>Tukar Poin:</h3>
+        <div id="rewardList">
+            <div class="card">
+                <div><strong>Bibit Tomat</strong><br><small>100 Poin</small></div>
+                <button onclick="tukarPoin(100, 'Bibit Tomat')">Tukar</button>
+            </div>
+            <div class="card">
+                <div><strong>Bibit Cabai</strong><br><small>150 Poin</small></div>
+                <button onclick="tukarPoin(150, 'Bibit Cabai')">Tukar</button>
+            </div>
+        </div>
+        <a href="index.html" style="display:block; margin-top:20px; color:#2d5a27;">← Kembali ke Home</a>
     </div>
+
+    <script>
+        // Ambil poin dari localStorage (Asumsi 1 poin = Rp 1.000 belanja)
+        let totalPoin = parseInt(localStorage.getItem('userPoin')) || 0;
+        document.getElementById('totalPoin').innerText = totalPoin;
+
+        function tukarPoin(harga, nama) {
+            if (totalPoin >= harga) {
+                totalPoin -= harga;
+                localStorage.setItem('userPoin', totalPoin);
+                document.getElementById('totalPoin').innerText = totalPoin;
+                alert("Selamat! Anda telah menukarkan poin untuk " + nama);
+            } else {
+                alert("Poin Anda tidak cukup!");
+            }
+        }
+    </script>
 </body>
 </html>
