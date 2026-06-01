@@ -1,9 +1,51 @@
-<script>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Keranjang G-HEats</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f4fcf4; padding: 20px; max-width: 500px; margin: auto; }
+        .card { background: white; padding: 15px; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .item { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .payment-option { display: flex; align-items: center; gap: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 10px; cursor: pointer; }
+        .payment-option:hover { background: #e8f5e9; }
+        button { background: #d32f2f; color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; cursor: pointer; font-size: 16px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h2 style="text-align: center; color: #2d5a27;">🛒 Keranjang Anda</h2>
+    
+    <div class="card" id="cartItems">
+        <!-- Item akan muncul di sini -->
+    </div>
+
+    <h4>Pilih Metode Pembayaran:</h4>
+    <div class="card">
+        <label class="payment-option"><input type="radio" name="pay" value="DANA" checked> DANA</label>
+        <label class="payment-option"><input type="radio" name="pay" value="GoPay"> GoPay</label>
+        <label class="payment-option"><input type="radio" name="pay" value="ShopeePay"> ShopeePay</label>
+    </div>
+
+    <button onclick="prosesCheckout()">Bayar Sekarang</button>
+    <div style="text-align: center; margin-top: 20px;"><a href="pemesanan.html">← Kembali ke Menu</a></div>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const container = document.getElementById('cartItems');
+        
+        cart.forEach(item => {
+            container.innerHTML += `
+                <div class="item">
+                    <span>${item.nama}</span>
+                    <span>Rp ${item.harga.toLocaleString()}</span>
+                </div>
+            `;
+        });
+
         function prosesCheckout() {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            if(cart.length === 0) return;
+            let metode = document.querySelector('input[name="pay"]:checked').value;
             
-            // 1. Simpan ke Riwayat Bulanan
+            // 1. Simpan ke Riwayat Bulanan (Riwayat Pembelian)
             let riwayatBulanIni = JSON.parse(localStorage.getItem('riwayatPembelian')) || [];
             riwayatBulanIni.push({
                 tanggal: new Date().toLocaleDateString(),
@@ -16,8 +58,11 @@
             let riwayatKalori = JSON.parse(localStorage.getItem('riwayatMakan')) || [];
             localStorage.setItem('riwayatMakan', JSON.stringify(riwayatKalori.concat(cart)));
             
+            // 3. Selesaikan Proses
             localStorage.removeItem('cart'); 
-            alert("Pembayaran Berhasil! Data tersimpan di riwayat bulanan.");
+            alert("Pesanan berhasil diproses dengan " + metode + "! Data tersimpan di riwayat bulanan.");
             window.location.href = "index.html";
         }
     </script>
+</body>
+</html>
