@@ -11,13 +11,14 @@
         .menu-img { width: 80px; height: 80px; border-radius: 10px; object-fit: cover; background-color: #eee; }
         .info { flex-grow: 1; margin-left: 15px; }
         .price { font-weight: bold; color: #d32f2f; }
+        .poin-label { font-size: 0.85em; color: #2d5a27; font-weight: bold; margin-bottom: 5px; display: block; }
         button { background: #2d5a27; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; }
         .cart-widget { position: fixed; top: 20px; right: 20px; background: #2d5a27; color: white; padding: 10px 15px; border-radius: 20px; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); text-decoration: none; z-index: 1000; font-size: 14px; }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="keranjang.html" class="cart-widget"><span>🛒</span><span id="cartCount">0</span> | <span id="cartTotal">Rp 0</span></a>
+        <a href="keranjang.html" class="cart-widget">🛒 <span id="cartCount">0</span> | <span id="cartTotal">Rp 0</span></a>
         <h2 style="text-align: center; color: #2d5a27; margin-top: 60px;">Menu Utama</h2>
         <div id="menuContainer"></div>
         <div style="text-align: center; margin-top: 30px;"><a href="index.html" style="color: #2d5a27; font-weight: bold;">← Kembali ke Home</a></div>
@@ -33,32 +34,34 @@
             {nama: "Tahu Kukus Jamur", kalori: 180, harga: 12000, img: "Tahu-Kukus-Jamur.jpg"}
         ];
 
+        function hitungPoin(harga) {
+            if (harga < 10000) return 5;
+            if (harga < 20000) return 10;
+            if (harga < 30000) return 15;
+            if (harga < 40000) return 20;
+            return 20;
+        }
+
         const container = document.getElementById('menuContainer');
         daftarMenu.forEach(item => {
+            let p = hitungPoin(item.harga);
             container.innerHTML += `
                 <div class="card">
                     <img src="${item.img}" class="menu-img">
                     <div class="info">
                         <h3>${item.nama}</h3>
                         <p>${item.kalori} kcal | <span class="price">Rp ${item.harga.toLocaleString()}</span></p>
-                        <button onclick="tambahKeKeranjang('${item.nama}', ${item.harga}, ${item.kalori})">Pesan</button>
+                        <span class="poin-label">🎁 Dapatkan ${p} Poin</span>
+                        <button onclick="tambahKeKeranjang('${item.nama}', ${item.harga}, ${item.kalori}, ${p})">Pesan</button>
                     </div>
                 </div>`;
         });
 
-        function tambahKeKeranjang(nama, harga, kalori) {
-            // Logika poin: 10-25 poin tergantung harga
-            let poinDapat = 10; // Default
-            if (harga >= 25000) { poinDapat = 25; }
-            else if (harga >= 20000) { poinDapat = 20; }
-            else if (harga >= 15000) { poinDapat = 15; }
-            
+        function tambahKeKeranjang(nama, harga, kalori, poin) {
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            // Simpan menu beserta poin yang didapat
-            cart.push({nama, harga, kalori, poin: poinDapat});
+            cart.push({nama, harga, kalori, poin});
             localStorage.setItem('cart', JSON.stringify(cart));
-            
-            alert(nama + " ditambahkan! (Anda mendapat " + poinDapat + " poin)");
+            alert(nama + " ditambahkan! (Anda mendapatkan " + poin + " poin)");
             updateWidget(); 
         }
 
