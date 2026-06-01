@@ -8,7 +8,7 @@
         body { font-family: sans-serif; background-color: #f4fcf4; margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh; }
         .container { background: white; width: 100%; max-width: 600px; padding: 20px; box-sizing: border-box; min-height: 100vh; }
         .card { background: white; padding: 15px; border-radius: 15px; margin-bottom: 12px; display: flex; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .menu-img { width: 80px; height: 80px; border-radius: 10px; object-fit: cover; }
+        .menu-img { width: 80px; height: 80px; border-radius: 10px; object-fit: cover; background-color: #eee; }
         .info { flex-grow: 1; margin-left: 15px; }
         .price { font-weight: bold; color: #d32f2f; }
         button { background: #2d5a27; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; }
@@ -24,23 +24,50 @@
     </div>
 
     <script>
-        const daftarMenu = [{nama: "Ayam Geprek", kalori: 450, harga: 25000, img: "Ayam-Geprek.jpg"}, {nama: "Steak Tempe Bakar", kalori: 300, harga: 18000, img: "Steak-Tempe-Bakar.jpg"}, {nama: "Bakso Nila Kuah Bening", kalori: 250, harga: 20000, img: "Bakso-Ikan-Nila-Kuah-Bening.jpg"}, {nama: "Edamame Rebus Garam Laut", kalori: 120, harga: 10000, img: "Edamame-Rebus-Garam-Laut.jpg"}, {nama: "Gado-gado Siram Kacang", kalori: 350, harga: 15000, img: "Gado-Gado-Siram-kacang.jpg"}, {nama: "Tahu Kukus Jamur", kalori: 180, harga: 12000, img: "Tahu-Kukus-Jamur.jpg"}];
+        const daftarMenu = [
+            {nama: "Ayam Geprek", kalori: 450, harga: 25000, img: "Ayam-Geprek.jpg"}, 
+            {nama: "Steak Tempe Bakar", kalori: 300, harga: 18000, img: "Steak-Tempe-Bakar.jpg"}, 
+            {nama: "Bakso Nila Kuah Bening", kalori: 250, harga: 20000, img: "Bakso-Ikan-Nila-Kuah-Bening.jpg"}, 
+            {nama: "Edamame Rebus Garam Laut", kalori: 120, harga: 10000, img: "Edamame-Rebus-Garam-Laut.jpg"}, 
+            {nama: "Gado-gado Siram Kacang", kalori: 350, harga: 15000, img: "Gado-Gado-Siram-kacang.jpg"}, 
+            {nama: "Tahu Kukus Jamur", kalori: 180, harga: 12000, img: "Tahu-Kukus-Jamur.jpg"}
+        ];
+
         const container = document.getElementById('menuContainer');
         daftarMenu.forEach(item => {
-            container.innerHTML += `<div class="card"><img src="${item.img}" class="menu-img"><div class="info"><h3>${item.nama}</h3><p>${item.kalori} kcal | <span class="price">Rp ${item.harga.toLocaleString()}</span></p><button onclick="tambahKeKeranjang('${item.nama}', ${item.harga}, ${item.kalori})">Pesan</button></div></div>`;
+            container.innerHTML += `
+                <div class="card">
+                    <img src="${item.img}" class="menu-img">
+                    <div class="info">
+                        <h3>${item.nama}</h3>
+                        <p>${item.kalori} kcal | <span class="price">Rp ${item.harga.toLocaleString()}</span></p>
+                        <button onclick="tambahKeKeranjang('${item.nama}', ${item.harga}, ${item.kalori})">Pesan</button>
+                    </div>
+                </div>`;
         });
+
         function tambahKeKeranjang(nama, harga, kalori) {
+            // Logika poin: 10-25 poin tergantung harga
+            let poinDapat = 10; // Default
+            if (harga >= 25000) { poinDapat = 25; }
+            else if (harga >= 20000) { poinDapat = 20; }
+            else if (harga >= 15000) { poinDapat = 15; }
+            
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            cart.push({nama, harga, kalori});
+            // Simpan menu beserta poin yang didapat
+            cart.push({nama, harga, kalori, poin: poinDapat});
             localStorage.setItem('cart', JSON.stringify(cart));
-            alert(nama + " ditambahkan!");
+            
+            alert(nama + " ditambahkan! (Anda mendapat " + poinDapat + " poin)");
             updateWidget(); 
         }
+
         function updateWidget() {
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
             document.getElementById('cartCount').innerText = cart.length;
             document.getElementById('cartTotal').innerText = "Rp " + cart.reduce((sum, item) => sum + item.harga, 0).toLocaleString();
         }
+
         updateWidget();
     </script>
 </body>
